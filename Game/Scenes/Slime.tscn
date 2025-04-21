@@ -1,0 +1,136 @@
+[gd_scene load_steps=10 format=3 uid="uid://deqecaf25m1te"]
+
+[ext_resource type="Texture2D" uid="uid://cywuycc2msdit" path="res://Enemy_Galore_I/Slime/Slime_Spiked_Idle.png" id="1_d12es"]
+[ext_resource type="Script" uid="uid://cbuuprujj1kti" path="res://Scenes/slime.gd" id="1_oh23g"]
+[ext_resource type="Script" uid="uid://0ejyiauqawk3" path="res://Scenes/hurtbox.gd" id="2_cwriv"]
+[ext_resource type="Script" uid="uid://c4r07e83f1emm" path="res://Scenes/hitbox.gd" id="4_xsyo3"]
+
+[sub_resource type="Animation" id="Animation_d12es"]
+resource_name = "Idle"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_d12es")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_cwriv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_d12es")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oh23g"]
+_data = {
+&"Idle": SubResource("Animation_d12es"),
+&"RESET": SubResource("Animation_cwriv")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oh23g"]
+radius = 27.0
+height = 66.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsyo3"]
+size = Vector2(127, 132.5)
+
+[node name="Slime" type="Node2D"]
+z_index = 2
+script = ExtResource("1_oh23g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_d12es")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oh23g")
+}
+autoplay = "Idle"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+z_index = 2
+script = ExtResource("2_cwriv")
+metadata/_custom_type_script = "uid://0ejyiauqawk3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-1, 31)
+shape = SubResource("CapsuleShape2D_oh23g")
+
+[node name="Hitbox" type="Area2D" parent="."]
+z_index = 2
+script = ExtResource("4_xsyo3")
+metadata/_custom_type_script = "uid://c4r07e83f1emm"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-95.5, -9.75)
+shape = SubResource("RectangleShape2D_xsyo3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(94, -5)
+shape = SubResource("RectangleShape2D_xsyo3")
