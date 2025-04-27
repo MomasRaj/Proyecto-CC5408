@@ -4,5 +4,5 @@ Este videojuego fue desarrollado para el ramo Taller de Diseño y Desarrollo de 
 
 ## Integrantes
 - Tomás Rajevic P. -  FCFM  
-- Ignacio Muñoz -  FCFM 
+- Ignacio Muñoz -  UTFSM
 - Andre Guinart C.-  FCFM 
