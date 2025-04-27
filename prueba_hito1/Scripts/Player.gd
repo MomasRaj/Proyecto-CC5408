@@ -1,8 +1,8 @@
 class_name  Player
 extends CharacterBody2D
 # Variables de movimiento
-var WALK_SPEED = 100.0
-var RUN_SPEED = 200.0
+var WALK_SPEED = 200.0
+var RUN_SPEED = 350.0
 var JUMP_VELOCITY = -300.0
 var GRAVITY = 900.0
 var MAX_SPEED = 200.0
