@@ -5,7 +5,7 @@ extends Node
 @export var _animPlayer : AnimationPlayer
 @export var move_data : MoveData
 @export var projectile_scene: PackedScene
-var _waitAmountOfFrames : int = 10
+var _waitAmountOfFrames : int = 20
 var _elapsedWaitTime : float
 
 
@@ -33,7 +33,7 @@ func _process(delta):
 func TranslateInput() -> void:
 	var key : String = ""
 	
-		
+	
 	if(Input.is_action_just_pressed("entry_left")): key = "L"
 	elif(Input.is_action_just_pressed("entry_right")): key = "R"
 	elif(Input.is_action_just_pressed("entry_jump")): key = "U"
@@ -50,7 +50,6 @@ func PerformMove(key : String):
 	if(!_moveSetDictionary.has(key)):
 		return
 	
-
 func PerformComboMove():
 	if move_data == null:
 		print("Error: move_data no está asignado.")
@@ -95,5 +94,5 @@ func ShootProjectile() -> void:
 		var spawn_position = get_parent().global_position
 		spawn_position.y -= 50
 		projectile.position = spawn_position
-		projectile.direction = Vector2.RIGHT
+		projectile.direction = Vector2.RIGHT # o LEFT si estás volteado
 		get_tree().current_scene.add_child(projectile)

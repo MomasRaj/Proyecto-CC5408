@@ -2,10 +2,11 @@ extends Node2D
 class_name CombatUI
 
 @onready var label: Label = $PromptLabel
+@onready var rich_text_label: RichTextLabel = $RichTextLabel
 
 func show_prompt(key: String):
-	label.text = key
-	label.visible = true
+	rich_text_label.text = key
+	rich_text_label.visible = true
 
 func hide_prompt():
-	label.visible = false
+	rich_text_label.visible = false

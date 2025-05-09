@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://c347xx24h8xf4"]
+
+[ext_resource type="Script" uid="uid://drq2vvlh5v21g" path="res://ui/credits.gd" id="1_ed0b0"]
+[ext_resource type="FontFile" uid="uid://c4vtcjly5xhlr" path="res://Fonts/antiquity-print.ttf" id="1_orljq"]
+
+[sub_resource type="Theme" id="Theme_74u3g"]
+default_font = ExtResource("1_orljq")
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_74u3g")
+script = ExtResource("1_ed0b0")
+
+[node name="Volver" type="Button" parent="."]
+layout_mode = 2
+offset_left = 1001.0
+offset_top = 563.0
+offset_right = 1150.0
+offset_bottom = 641.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Return"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -121.5
+offset_top = -80.0
+offset_right = 121.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Tomas Rajevic 
+"
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Ignacio Muñoz
+"
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Andre Guinart"
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1

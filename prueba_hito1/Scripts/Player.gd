@@ -1,8 +1,8 @@
 class_name  Player
 extends CharacterBody2D
 # Variables de movimiento
-var WALK_SPEED = 200.0
-var RUN_SPEED = 350.0
+var WALK_SPEED = 100.0
+var RUN_SPEED = 200.0
 var JUMP_VELOCITY = -300.0
 var GRAVITY = 900.0
 var MAX_SPEED = 200.0
@@ -36,7 +36,7 @@ func _ready():
 
 func _input(_event):
 	if is_in_combat:
-		if Input.is_action_pressed("entry_parry_initiate"):
+		if Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4"):
 			if not is_blocking:
 				is_blocking=true
 				combat_manager.set_player_blocking(is_blocking)
@@ -79,7 +79,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("entry_attack") and not is_blocking and not is_in_combat and is_on_floor():
 		playback.travel("Attack1")
 		return
-	if Input.is_action_pressed("entry_parry_initiate") and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4") or Input.is_action_just_pressed("entry_parry_initiate")):
+	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4") or Input.is_action_just_pressed("entry_parry_initiate")):
 		playback.travel("Parry")
 		return
 	velocity.x = direction*MAX_SPEED
