@@ -94,5 +94,5 @@ func ShootProjectile() -> void:
 		var spawn_position = get_parent().global_position
 		spawn_position.y -= 50
 		projectile.position = spawn_position
-		projectile.direction = Vector2.RIGHT # o LEFT si estás volteado
+		projectile.direction = Vector2.RIGHT 
 		get_tree().current_scene.add_child(projectile)
