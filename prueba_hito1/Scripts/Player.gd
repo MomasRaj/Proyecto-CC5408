@@ -2,12 +2,11 @@ class_name  Player
 extends CharacterBody2D
 # Variables de movimiento
 var WALK_SPEED = 100.0
-var RUN_SPEED = 400.0
-var JUMP_VELOCITY = -300.0
+var RUN_SPEED = 300.0
+var JUMP_VELOCITY = -400.0
 var GRAVITY = 900.0
 var MAX_SPEED = 200.0
 var ATTACK_SPEED = 30
-var FRICTION = 100
 
 # Variables de combate
 var is_in_combat:bool =false
@@ -19,6 +18,15 @@ var PARRY_COOLDOWN = 0.5
 
 # Doble salto
 var salto = 0
+# Airdash
+var AIRDASH_SPEED = 550
+var air_dash = 1
+# Direccion dash
+var last_direction = 0
+# Velocidad aire
+var AIR_VELOCITY = 0
+# Resitencia aire
+var AIR_RESISTANCE = 200
 
 # Referencias a nodos
 @onready var player: Player = $"."
@@ -68,6 +76,12 @@ func _on_combat_ended(success: bool):
 func _physics_process(delta):
 	var direction = Input.get_axis("entry_left","entry_right")
 	
+	
+	if direction == 1:
+		last_direction = 1
+	elif direction == -1:
+		last_direction = -1
+	
 	if Input.is_action_pressed("entry_run"):
 		MAX_SPEED = RUN_SPEED
 	else:
@@ -90,11 +104,13 @@ func _physics_process(delta):
 	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4") or Input.is_action_just_pressed("entry_parry_initiate")):
 		playback.travel("Parry")
 		return
-	velocity.x = direction * MAX_SPEED 
+	velocity.x = direction*max(MAX_SPEED,abs(velocity.x)) 
 	move_and_slide()
 
 	if is_on_floor():
 		salto = 1
+		air_dash = 1
+		
 		if direction!=0:
 			pivote.scale.x=sign(direction)
 		if abs(velocity.x)==RUN_SPEED:
@@ -106,8 +122,16 @@ func _physics_process(delta):
 	else:
 		if velocity.y<0:
 			playback.travel("Jump")
-		if Input.is_action_just_pressed("entry_run"): ##dash
-			velocity.x+=1000
+		if Input.is_action_just_pressed("entry_run") and air_dash < 2: #dash
+			AIR_VELOCITY = last_direction * AIRDASH_SPEED
+			velocity.x = AIR_VELOCITY
+			air_dash += 1
+		if air_dash == 2:
+			AIR_VELOCITY -= delta * AIR_RESISTANCE * last_direction * 3
+			if abs(AIR_VELOCITY) < 10:
+				AIR_VELOCITY = 0
+			velocity.x = AIR_VELOCITY
+		
 
 func take_damage():
 	playback.travel("Hurt")
