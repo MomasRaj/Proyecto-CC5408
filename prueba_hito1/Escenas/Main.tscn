@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bhy17t8ykfree"]
+[gd_scene load_steps=24 format=4 uid="uid://bhy17t8ykfree"]
 
 [ext_resource type="Texture2D" uid="uid://ci1jd0wbvmgjg" path="res://Assets/TileSets/props2.png" id="1_a5a2i"]
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ig2kn"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cmv6er3y0xl0l" path="res://Scripts/combat_manager.gd" id="11_u12ih"]
 [ext_resource type="PackedScene" uid="uid://cdvaggr452s2t" path="res://Escenas/Enemigo1.tscn" id="13_ig2kn"]
 [ext_resource type="AudioStream" uid="uid://jeea6hkp0vvs" path="res://sword-clash-241729.mp3" id="13_t36bp"]
+[ext_resource type="PackedScene" uid="uid://dpcmbcp2jlf4p" path="res://ui/Menu.tscn" id="14_t36bp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fhaj2"]
 texture = ExtResource("1_a5a2i")
@@ -11907,3 +11908,7 @@ tile_set = SubResource("TileSet_u35fg")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_t36bp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main menu" parent="CanvasLayer" instance=ExtResource("14_t36bp")]

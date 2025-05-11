@@ -11,8 +11,12 @@ Title/font_sizes/font_size = 60
 
 [node name="Main menu" type="MarginContainer"]
 process_mode = 3
-offset_right = 1039.0
-offset_bottom = 713.0
+top_level = true
+anchors_preset = -1
+anchor_right = 1.01014
+anchor_bottom = 0.9982
+offset_right = 311.7
+offset_bottom = 213.9
 scale = Vector2(0.7, 0.7)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -22,6 +26,7 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 script = ExtResource("2_flbq7")
+metadata/_edit_use_anchors_ = true
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -30,6 +35,8 @@ size_flags_vertical = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
