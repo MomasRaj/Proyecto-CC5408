@@ -2,11 +2,12 @@ class_name  Player
 extends CharacterBody2D
 # Variables de movimiento
 var WALK_SPEED = 100.0
-var RUN_SPEED = 200.0
+var RUN_SPEED = 400.0
 var JUMP_VELOCITY = -300.0
 var GRAVITY = 900.0
 var MAX_SPEED = 200.0
-var ATTACK_SPEED=30
+var ATTACK_SPEED = 30
+var FRICTION = 100
 
 # Variables de combate
 var is_in_combat:bool =false
@@ -15,6 +16,9 @@ var is_blocking: bool = false
 # Cooldowns
 var ATTACK_COOLDOWN = 0.6
 var PARRY_COOLDOWN = 0.5
+
+# Doble salto
+var salto = 0
 
 # Referencias a nodos
 @onready var player: Player = $"."
@@ -71,6 +75,10 @@ func _physics_process(delta):
 	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+		if salto < 2 and Input.is_action_just_pressed("entry_jump"):
+			velocity.y = JUMP_VELOCITY
+			salto += 1
+			
 	# Salto
 	if is_on_floor() and not is_blocking and not is_in_combat:
 		if Input.is_action_just_pressed("entry_jump"):
@@ -82,10 +90,11 @@ func _physics_process(delta):
 	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4") or Input.is_action_just_pressed("entry_parry_initiate")):
 		playback.travel("Parry")
 		return
-	velocity.x = direction*MAX_SPEED
+	velocity.x = direction * MAX_SPEED 
 	move_and_slide()
 
 	if is_on_floor():
+		salto = 1
 		if direction!=0:
 			pivote.scale.x=sign(direction)
 		if abs(velocity.x)==RUN_SPEED:
@@ -97,6 +106,8 @@ func _physics_process(delta):
 	else:
 		if velocity.y<0:
 			playback.travel("Jump")
+		if Input.is_action_just_pressed("entry_run"): ##dash
+			velocity.x+=1000
 
 func take_damage():
 	playback.travel("Hurt")
