@@ -47,6 +47,12 @@ func _on_attack_area_body_entered(body):
 		is_attacking=true
 		playback.travel("Enemie_attack1")
 		await animation_tree.animation_finished
+		
+		# Buscar y dañar al componente de salud del jugador
+		if body.has_node("SaludComponente"):
+			var salud_componente = body.get_node("SaludComponente")
+			salud_componente.recibir_damage(10.0) # Puedes ajustar la cantidad de daño
+		
 		is_attacking=false
 		can_attack=true
 

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://psbi1ynjvres"]
+
+[ext_resource type="Script" uid="uid://dkihxb1fpo8w0" path="res://Scripts/progress_bar.gd" id="1_nkh8u"]
+
+[sub_resource type="FontFile" id="FontFile_k0esq"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k0esq"]
+bg_color = Color(0.131153, 0.118001, 0.126284, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkh8u"]
+bg_color = Color(0.466298, 0.671515, 0.264898, 1)
+
+[node name="ProgressBar" type="ProgressBar"]
+offset_right = 96.0
+offset_bottom = 10.0
+theme_override_fonts/font = SubResource("FontFile_k0esq")
+theme_override_styles/background = SubResource("StyleBoxFlat_k0esq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nkh8u")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+script = ExtResource("1_nkh8u")

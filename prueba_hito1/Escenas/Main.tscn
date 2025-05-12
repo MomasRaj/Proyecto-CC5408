@@ -1,9 +1,11 @@
-[gd_scene load_steps=24 format=4 uid="uid://bhy17t8ykfree"]
+[gd_scene load_steps=26 format=4 uid="uid://bhy17t8ykfree"]
 
 [ext_resource type="Texture2D" uid="uid://ci1jd0wbvmgjg" path="res://Assets/TileSets/props2.png" id="1_a5a2i"]
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ig2kn"]
 [ext_resource type="Texture2D" uid="uid://cbncuf7c5mgs4" path="res://Assets/TileSets/mainlev_build.png" id="2_3ihj5"]
+[ext_resource type="PackedScene" uid="uid://cabwq5dlafn04" path="res://Escenas/salud_componente.tscn" id="3_2e8qy"]
 [ext_resource type="Texture2D" uid="uid://cyq1mnr00nik2" path="res://Assets/TileSets/background1.png" id="3_8fxbh"]
+[ext_resource type="PackedScene" uid="uid://psbi1ynjvres" path="res://Escenas/progress_bar.tscn" id="4_dc6jj"]
 [ext_resource type="Texture2D" uid="uid://b346k77ulshiu" path="res://Assets/TileSets/background2.png" id="4_u12ih"]
 [ext_resource type="Texture2D" uid="uid://dvwrbrb15ldw2" path="res://Assets/TileSets/background3.png" id="5_ig2kn"]
 [ext_resource type="Texture2D" uid="uid://c47b4aim877d8" path="res://Assets/TileSets/background4a.png" id="6_t36bp"]
@@ -11879,6 +11881,15 @@ script = ExtResource("1_ig2kn")
 [node name="Player" parent="." instance=ExtResource("9_dc6jj")]
 z_index = 1
 position = Vector2(-55, 159)
+
+[node name="SaludComponente" parent="Player" node_paths=PackedStringArray("barra_salud") instance=ExtResource("3_2e8qy")]
+barra_salud = NodePath("../ProgressBar")
+
+[node name="ProgressBar" parent="Player" instance=ExtResource("4_dc6jj")]
+offset_left = -48.0
+offset_top = -113.0
+offset_right = 48.0
+offset_bottom = -103.0
 
 [node name="Enemy1" parent="." instance=ExtResource("13_ig2kn")]
 z_index = 1
