@@ -14,6 +14,7 @@ var _moveSetDictionary : Dictionary
 
 var _isAttacking : bool = false
 var _isCrouching : bool = false
+var _isJumping : bool = false
 
 func _ready() -> void:
 	if move_data:
@@ -44,7 +45,10 @@ func TranslateInput() -> void:
 	
 	PerformMove(key)
 	_elapsedWaitTime = 0
-	_registeredKeyInputs.append(key)
+	if key=="U":
+		pass
+	else:
+		_registeredKeyInputs.append(key)
 
 func PerformMove(key : String):
 	if(!_moveSetDictionary.has(key)):
