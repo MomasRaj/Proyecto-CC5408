@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cdvaggr452s2t"]
+[gd_scene load_steps=63 format=3 uid="uid://cdvaggr452s2t"]
 
 [ext_resource type="Texture2D" uid="uid://bvhtroa3k4blw" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Attack_1.png" id="1_0owe6"]
 [ext_resource type="Script" uid="uid://u27ubqms1gna" path="res://Scripts/enemigo_1.gd" id="1_fvh8t"]
@@ -11,15 +11,18 @@
 [ext_resource type="Texture2D" uid="uid://drldr3r1mb076" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Walk.png" id="8_uc47y"]
 [ext_resource type="Texture2D" uid="uid://cdenseg73xjfl" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Idle.png" id="9_1mhm5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvh8t"]
-size = Vector2(43.5, 58.375)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vhuci"]
 radius = 9.0
 height = 68.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvh8t"]
+size = Vector2(43.5, 58.375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p72vh"]
+size = Vector2(42, 56)
+
 [sub_resource type="Animation" id="Animation_klk3y"]
-resource_name = "Enemie_Idle"
+resource_name = "Enemy_Idle"
 length = 0.5
 loop_mode = 1
 step = 0.1
@@ -73,7 +76,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_limyy"]
-resource_name = "Enemie_attack1"
+resource_name = "Enemy_attack1"
 length = 0.6
 step = 0.1
 tracks/0/type = "value"
@@ -150,7 +153,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_3l337"]
-resource_name = "Enemie_attack2"
+resource_name = "Enemy_attack2"
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -226,7 +229,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_x3t1o"]
-resource_name = "Enemie_attack3"
+resource_name = "Enemy_attack3"
 length = 0.6
 step = 0.1
 tracks/0/type = "value"
@@ -303,7 +306,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_kundd"]
-resource_name = "Enemie_hurt"
+resource_name = "Enemy_hurt"
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -355,7 +358,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_sshi8"]
-resource_name = "Enemie_muerte"
+resource_name = "Enemy_muerte"
 length = 0.6
 step = 0.1
 tracks/0/type = "value"
@@ -408,7 +411,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_hbuol"]
-resource_name = "Enemie_parry"
+resource_name = "Enemy_parry"
 length = 0.2
 step = 0.1
 tracks/0/type = "value"
@@ -461,7 +464,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_mipgj"]
-resource_name = "Enemie_run"
+resource_name = "Enemy_run"
 length = 0.8
 loop_mode = 1
 step = 0.1
@@ -515,7 +518,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_0y1o0"]
-resource_name = "Enemie_walk"
+resource_name = "Enemy_walk"
 length = 0.9
 loop_mode = 1
 step = 0.1
@@ -645,61 +648,45 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r5cod"]
 _data = {
-&"Enemie_Idle": SubResource("Animation_klk3y"),
-&"Enemie_attack1": SubResource("Animation_limyy"),
-&"Enemie_attack2": SubResource("Animation_3l337"),
-&"Enemie_attack3": SubResource("Animation_x3t1o"),
-&"Enemie_hurt": SubResource("Animation_kundd"),
-&"Enemie_muerte": SubResource("Animation_sshi8"),
-&"Enemie_parry": SubResource("Animation_hbuol"),
-&"Enemie_run": SubResource("Animation_mipgj"),
-&"Enemie_walk": SubResource("Animation_0y1o0"),
+&"Enemy_Idle": SubResource("Animation_klk3y"),
+&"Enemy_attack1": SubResource("Animation_limyy"),
+&"Enemy_attack2": SubResource("Animation_3l337"),
+&"Enemy_attack3": SubResource("Animation_x3t1o"),
+&"Enemy_hurt": SubResource("Animation_kundd"),
+&"Enemy_muerte": SubResource("Animation_sshi8"),
+&"Enemy_parry": SubResource("Animation_hbuol"),
+&"Enemy_run": SubResource("Animation_mipgj"),
+&"Enemy_walk": SubResource("Animation_0y1o0"),
 &"RESET": SubResource("Animation_hr34j")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p72vh"]
-animation = &"Enemie_attack1"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvh8t"]
-animation = &"Enemie_attack2"
+animation = &"Enemy_Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hn1uk"]
-animation = &"Enemie_attack3"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvhl5"]
-animation = &"Enemie_hurt"
+animation = &"Enemy_attack1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_crbyo"]
-animation = &"Enemie_walk"
+animation = &"Enemy_attack2"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sshi8"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvhl5"]
+animation = &"Enemy_attack3"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0y1o0"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ekuuh"]
+animation = &"Enemy_hurt"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_klk3y"]
-switch_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p72vh"]
+animation = &"Enemy_walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_os5ul"]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uuyxj"]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fvh8t"]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p72vh"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hn1uk"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_crbyo"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fvhl5"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ekuuh"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uc47y"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1mhm5"]
 switch_mode = 2
@@ -710,7 +697,6 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_limyy"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hr34j"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3l337"]
 switch_mode = 2
@@ -718,7 +704,32 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_x3t1o"]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sshi8"]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kundd"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tvxv8"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ggeuy"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_763fm"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ifqnj"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ndaoy"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eq8ro"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i8kkx"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wwv1j"]
 switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hbuol"]
@@ -727,28 +738,51 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mipgj"]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0y1o0"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_klk3y"]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_r5cod"]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ekaq5"]
-states/End/position = Vector2(918, 202)
-states/Enemie_attack1/node = SubResource("AnimationNodeAnimation_p72vh")
-states/Enemie_attack1/position = Vector2(193, 289)
-states/Enemie_attack2/node = SubResource("AnimationNodeAnimation_fvh8t")
-states/Enemie_attack2/position = Vector2(409.672, 289)
-states/Enemie_attack3/node = SubResource("AnimationNodeAnimation_hn1uk")
-states/Enemie_attack3/position = Vector2(593.672, 289)
-states/Enemie_hurt/node = SubResource("AnimationNodeAnimation_fvhl5")
-states/Enemie_hurt/position = Vector2(464, 184)
-states/Enemie_walk/node = SubResource("AnimationNodeAnimation_crbyo")
-states/Enemie_walk/position = Vector2(193, 184)
-states/Start/position = Vector2(13, 184)
-transitions = ["Enemie_walk", "Enemie_attack1", SubResource("AnimationNodeStateMachineTransition_sshi8"), "Enemie_walk", "Enemie_hurt", SubResource("AnimationNodeStateMachineTransition_0y1o0"), "Enemie_attack1", "Enemie_hurt", SubResource("AnimationNodeStateMachineTransition_klk3y"), "Enemie_hurt", "Enemie_walk", SubResource("AnimationNodeStateMachineTransition_os5ul"), "Enemie_hurt", "Enemie_attack1", SubResource("AnimationNodeStateMachineTransition_uuyxj"), "Enemie_attack1", "Enemie_walk", SubResource("AnimationNodeStateMachineTransition_fvh8t"), "Start", "Enemie_walk", SubResource("AnimationNodeStateMachineTransition_p72vh"), "Enemie_walk", "Enemie_attack2", SubResource("AnimationNodeStateMachineTransition_crbyo"), "Enemie_attack2", "Enemie_walk", SubResource("AnimationNodeStateMachineTransition_fvhl5"), "Enemie_attack2", "Enemie_hurt", SubResource("AnimationNodeStateMachineTransition_ekuuh"), "Enemie_hurt", "Enemie_attack2", SubResource("AnimationNodeStateMachineTransition_uc47y"), "Enemie_attack1", "Enemie_attack2", SubResource("AnimationNodeStateMachineTransition_1mhm5"), "Enemie_attack2", "Enemie_attack1", SubResource("AnimationNodeStateMachineTransition_vhuci"), "Enemie_walk", "Enemie_attack3", SubResource("AnimationNodeStateMachineTransition_limyy"), "Enemie_attack3", "Enemie_walk", SubResource("AnimationNodeStateMachineTransition_hr34j"), "Enemie_attack3", "Enemie_attack2", SubResource("AnimationNodeStateMachineTransition_3l337"), "Enemie_attack2", "Enemie_attack3", SubResource("AnimationNodeStateMachineTransition_x3t1o"), "Enemie_attack3", "Enemie_attack1", SubResource("AnimationNodeStateMachineTransition_kundd"), "Enemie_attack1", "Enemie_attack3", SubResource("AnimationNodeStateMachineTransition_hbuol"), "Enemie_attack3", "Enemie_hurt", SubResource("AnimationNodeStateMachineTransition_mipgj"), "Enemie_hurt", "Enemie_attack3", SubResource("AnimationNodeStateMachineTransition_r5cod")]
-graph_offset = Vector2(-902.328, 93.144)
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_os5ul"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ruo28"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uuyxj"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rmmxw"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gc6vf"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ekuuh"]
+states/Enemy_Idle/node = SubResource("AnimationNodeAnimation_fvh8t")
+states/Enemy_Idle/position = Vector2(350, 100)
+states/Enemy_attack1/node = SubResource("AnimationNodeAnimation_hn1uk")
+states/Enemy_attack1/position = Vector2(566, 19)
+states/Enemy_attack2/node = SubResource("AnimationNodeAnimation_crbyo")
+states/Enemy_attack2/position = Vector2(566, 100)
+states/Enemy_attack3/node = SubResource("AnimationNodeAnimation_fvhl5")
+states/Enemy_attack3/position = Vector2(566, 178)
+states/Enemy_hurt/node = SubResource("AnimationNodeAnimation_ekuuh")
+states/Enemy_hurt/position = Vector2(350, 178)
+states/Enemy_walk/node = SubResource("AnimationNodeAnimation_p72vh")
+states/Enemy_walk/position = Vector2(350, 19)
+transitions = ["Start", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_hn1uk"), "Enemy_Idle", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_crbyo"), "Enemy_walk", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_fvhl5"), "Enemy_walk", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_ekuuh"), "Enemy_Idle", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_uc47y"), "Enemy_attack1", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_1mhm5"), "Enemy_attack1", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_vhuci"), "Enemy_walk", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_limyy"), "Enemy_Idle", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_hr34j"), "Enemy_attack1", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_3l337"), "Enemy_attack2", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_x3t1o"), "Enemy_attack2", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_sshi8"), "Enemy_attack2", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_kundd"), "Enemy_walk", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_tvxv8"), "Enemy_Idle", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_ggeuy"), "Enemy_hurt", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_763fm"), "Enemy_hurt", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_ifqnj"), "Enemy_hurt", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_ndaoy"), "Enemy_hurt", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_eq8ro"), "Enemy_attack1", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_i8kkx"), "Enemy_attack2", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_wwv1j"), "Enemy_attack3", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_hbuol"), "Enemy_attack3", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_mipgj"), "Enemy_attack2", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_0y1o0"), "Enemy_attack1", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_klk3y"), "Enemy_attack3", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_r5cod"), "Enemy_attack3", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_os5ul"), "Enemy_attack3", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_ruo28"), "Enemy_walk", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_uuyxj"), "Enemy_Idle", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_rmmxw"), "Enemy_hurt", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_gc6vf")]
+graph_offset = Vector2(-173, -39)
 
 [node name="Enemy1" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_fvh8t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-9, -34)
+shape = SubResource("CapsuleShape2D_vhuci")
 
 [node name="Pivote" type="Node2D" parent="."]
 
@@ -764,9 +798,11 @@ position = Vector2(27, -36)
 shape = SubResource("RectangleShape2D_fvh8t")
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-9, -34)
-shape = SubResource("CapsuleShape2D_vhuci")
+[node name="ParryNotifyArea" type="Area2D" parent="Pivote"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/ParryNotifyArea"]
+position = Vector2(27, -36)
+shape = SubResource("RectangleShape2D_p72vh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -774,5 +810,5 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_ekaq5")
+tree_root = SubResource("AnimationNodeStateMachine_ekuuh")
 anim_player = NodePath("../AnimationPlayer")

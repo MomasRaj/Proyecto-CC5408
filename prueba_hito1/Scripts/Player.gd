@@ -11,11 +11,14 @@ var ATTACK_SPEED = 30
 # Variables de combate
 var is_in_combat:bool =false
 var is_blocking: bool = false
+var parry_area_contact: bool = false
+var is_hurt: bool= false
+var knockback_strength := 300
 
 # Cooldowns
 var ATTACK_COOLDOWN = 0.6
 var PARRY_COOLDOWN = 0.5
-
+var hurt_duration := 0.6
 # Doble salto
 var salto = 0
 # Airdash
@@ -37,29 +40,10 @@ var AIR_RESISTANCE = 200
 @onready var combat_manager: Node = $"../CombatManager"
 @onready var block_area: Area2D = $Pivote/Sprite2D/BlockArea
 
-
-signal parry_zone_contact
-
 func _ready():
-	block_area.area_entered.connect(_on_block_area_area_entered)
 	combat_manager.combat_started.connect(_on_combat_started)
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
-
-func _input(_event):
-	if is_in_combat:
-		if Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4"):
-			if not is_blocking:
-				is_blocking=true
-				combat_manager.set_player_blocking(is_blocking)
-		elif is_blocking:
-			is_blocking=false
-			combat_manager.set_player_blocking(is_blocking)
-		
-		if is_blocking:
-			for i in range(1,5):
-				if Input.is_action_just_pressed("parry_random%d"%i):
-					combat_manager.register_input(i)
 
 func _on_combat_started():
 	is_in_combat=true
@@ -68,36 +52,34 @@ func _on_combat_started():
 func _on_combat_ended(success: bool):
 	is_in_combat = false
 	is_blocking = false
-	if success:
-		print("¡Secuencia bloqueada con éxito! El enemigo ahora puede recibir daño.")
-	else:
-		print("Fallaste la secuencia. El enemigo te golpea.")
+
 
 func _physics_process(delta):
 	var direction = Input.get_axis("entry_left","entry_right")
-	
-	
+	if is_hurt:
+		move_and_slide()
+		return
 	if direction == 1:
 		last_direction = 1
 	elif direction == -1:
 		last_direction = -1
-	
 	if Input.is_action_pressed("entry_run"):
 		MAX_SPEED = RUN_SPEED
 	else:
 		MAX_SPEED = WALK_SPEED
+		
 	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 		if salto < 2 and Input.is_action_just_pressed("entry_jump"):
 			velocity.y = JUMP_VELOCITY
 			salto += 1
-			
 	# Salto
 	if is_on_floor() and not is_blocking and not is_in_combat:
 		if Input.is_action_just_pressed("entry_jump"):
 			velocity.y=JUMP_VELOCITY
 
+	#Animaciones
 	if Input.is_action_just_pressed("entry_attack") and not is_blocking and not is_in_combat and is_on_floor():
 		playback.travel("Attack1")
 		return
@@ -110,7 +92,6 @@ func _physics_process(delta):
 	if is_on_floor():
 		salto = 1
 		air_dash = 1
-		
 		if direction!=0:
 			pivote.scale.x=sign(direction)
 		if abs(velocity.x)==RUN_SPEED:
@@ -120,6 +101,8 @@ func _physics_process(delta):
 		elif abs(velocity.x)==0:
 			playback.travel("Idle")
 	else:
+		if direction!=0:
+			pivote.scale.x=sign(direction)
 		if velocity.y<0:
 			playback.travel("Jump")
 		if Input.is_action_just_pressed("entry_run") and air_dash < 2: #dash
@@ -131,19 +114,24 @@ func _physics_process(delta):
 			if abs(AIR_VELOCITY) < 10:
 				AIR_VELOCITY = 0
 			velocity.x = AIR_VELOCITY
-		
 
-func take_damage():
+func take_damage(from_position: Vector2):
+	if is_hurt:
+		return
+
+	is_hurt = true
 	playback.travel("Hurt")
-	return
+
+	# Calcular dirección desde el enemigo hacia el jugador
+	var knockback_dir = (global_position - from_position).normalized()
+	velocity = knockback_dir * knockback_strength
+
+	# Desactivar entrada (ej. movimiento y acciones)
+	await get_tree().create_timer(hurt_duration).timeout
+
+	is_hurt = false
 
 func hide_label():
 	if player.has_node("PromptUI"):
 		if player.get_node("PromptUI").has_node("PromptLabel"):
 			player.get_node("PromptUI").get_node("PromptLabel").hide()
-
-
-func _on_block_area_area_entered(area: Area2D) -> void:
-	if area.name == "Attack_area":
-		print("Área de ataque detectada")
-		emit_signal("parry_zone_contact")
