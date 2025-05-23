@@ -15,6 +15,8 @@ var parry_area_contact: bool = false
 var is_hurt: bool= false
 var knockback_strength := 300
 
+var dead: bool = false
+
 # Cooldowns
 var ATTACK_COOLDOWN = 0.6
 var PARRY_COOLDOWN = 0.5
@@ -40,10 +42,19 @@ var AIR_RESISTANCE = 200
 @onready var combat_manager: Node = $"../CombatManager"
 @onready var block_area: Area2D = $Pivote/Sprite2D/BlockArea
 
+# referencias a la salud
+@onready var health_bar: ProgressBar = %HealthBar
+@onready var health_component: HealthComponent = $HealthComponent
+
+
 func _ready():
 	combat_manager.combat_started.connect(_on_combat_started)
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
+	health_component.health_changed.connect(_on_health_changed)
+	health_bar.value = health_component.health
+	health_bar.max_value = health_component.max_health
+	health_component.died.connect(death)
 
 func _on_combat_started():
 	is_in_combat=true
@@ -67,7 +78,10 @@ func _physics_process(delta):
 		MAX_SPEED = RUN_SPEED
 	else:
 		MAX_SPEED = WALK_SPEED
-		
+	
+	if dead:
+		return
+	
 	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -116,7 +130,7 @@ func _physics_process(delta):
 			velocity.x = AIR_VELOCITY
 
 func take_damage(from_position: Vector2):
-	if is_hurt:
+	if is_hurt or is_blocking:
 		return
 
 	is_hurt = true
@@ -135,3 +149,34 @@ func hide_label():
 	if player.has_node("PromptUI"):
 		if player.get_node("PromptUI").has_node("PromptLabel"):
 			player.get_node("PromptUI").get_node("PromptLabel").hide()
+			
+			
+func recibir_damage(_damage: float) -> void:
+	if is_blocking or is_hurt:
+		return
+	death()
+
+func death() -> void:
+	if dead:
+		return  # 👈 evita múltiples ejecuciones
+	dead = true
+	collision_shape_2d.disabled = true
+	set_physics_process(false)
+	
+	set_collision_layer(0)
+	set_collision_mask(0)
+	
+	playback.travel("Muerte")
+	await animation_tree.animation_finished
+	animation_tree.active = false
+
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 1)
+	await get_tree().create_timer(1).timeout
+	
+	queue_free()
+
+	get_tree().reload_current_scene()
+		
+func _on_health_changed(value: float) -> void:
+	health_bar.value = value

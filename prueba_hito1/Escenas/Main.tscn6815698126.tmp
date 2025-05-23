@@ -484,6 +484,8 @@ position = Vector2(382, 143)
 
 [node name="CombatManager" type="Node" parent="."]
 script = ExtResource("11_u12ih")
+attack_interval = null
+sequence_lenght = null
 
 [node name="MapLayers" type="Node" parent="."]
 

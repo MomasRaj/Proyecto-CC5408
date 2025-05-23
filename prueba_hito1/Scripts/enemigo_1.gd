@@ -8,6 +8,9 @@ class_name Enemy
 @onready var combat_manager: Node = $"../CombatManager"
 @onready var parry_notify_area: Area2D = $Pivote/ParryNotifyArea
 
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
+
 # Variables de movimiento
 var WALK_SPEED = 0
 var RUN_SPEED = 200.0
@@ -20,11 +23,23 @@ var is_attacking:= false
 var is_in_combat:=false
 var current_attack_anim: String= ""
 
+var dead: bool = false
+
+# referencias a la salud
+@onready var health_bar: ProgressBar = %HealthBar
+@onready var health_component: HealthComponent = $HealthComponent
+
 func _ready():
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
-	parry_notify_area.body_entered.connect(_on_notify_parry)
-	parry_notify_area.body_exited.connect(_on_notify_parry_end)
+	if not(dead):
+		parry_notify_area.body_entered.connect(_on_notify_parry)
+		parry_notify_area.body_exited.connect(_on_notify_parry_end)
+	
+	health_component.health_changed.connect(_on_health_changed)
+	health_bar.value = health_component.health
+	health_bar.max_value = health_component.max_health
+	health_component.died.connect(death)
 	
 func _on_combat_ended(succes:bool):
 	if succes:
@@ -33,7 +48,11 @@ func _on_combat_ended(succes:bool):
 		print("El jugador falló")
 	
 func _physics_process(delta):
+	if dead:
+		return
 	var direction = sign(player.global_position.x - global_position.x)
+	
+	
 	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -47,6 +66,8 @@ func _physics_process(delta):
 		pivote.scale.x = sign(direction)
 
 func attack():
+	if dead or not can_attack:
+		return
 	var k=randi_range(1,3)
 	var ataque="Enemy_attack"+str(k)
 	current_attack_anim=ataque
@@ -56,12 +77,16 @@ func attack():
 	playback.travel("Enemy_walk")
 
 func take_damage():
+	if dead:
+		return
 	playback.travel("Enemy_hurt")
 	await get_tree().create_timer(1).timeout
 	playback.travel("Enemy_Idle")
 	return
 	
 func _on_notify_parry(body: Node):
+	if dead:
+		return
 	var player_ = body as Player
 	if player_:
 		combat_manager.enemy_list.append(self)
@@ -70,3 +95,40 @@ func _on_notify_parry_end(body:Node):
 	var player_ = body as Player
 	if player_:
 		combat_manager.enemy_list.erase(self)
+
+func recibir_damage(damage: float) -> void:
+	if dead:
+		return
+	Debug.log("auch: %d damage %s" % [damage, "aaa"])
+	death()
+
+func death() -> void:
+	if dead:
+		return # Ya está muerto, no hacer nada
+	
+	dead = true	
+	
+	# Desactivar lógica de combate y daño
+	collision_shape_2d.disabled = true
+	parry_notify_area.monitoring = false
+	attack_area.monitoring = false
+	set_physics_process(false)
+	
+	set_collision_layer(0)
+	set_collision_mask(0)
+	
+	# Ocultar barra de vida de inmediato
+	health_bar.visible = false
+	
+	playback.travel("Enemy_muerte")
+	await animation_tree.animation_finished
+	
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 1)
+	await tween.finished
+
+	queue_free()
+
+	
+func _on_health_changed(value: float) -> void:
+	health_bar.value = value

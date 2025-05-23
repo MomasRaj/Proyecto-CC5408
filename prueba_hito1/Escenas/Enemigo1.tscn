@@ -1,8 +1,9 @@
-[gd_scene load_steps=63 format=3 uid="uid://cdvaggr452s2t"]
+[gd_scene load_steps=70 format=3 uid="uid://cdvaggr452s2t"]
 
 [ext_resource type="Texture2D" uid="uid://bvhtroa3k4blw" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Attack_1.png" id="1_0owe6"]
 [ext_resource type="Script" uid="uid://u27ubqms1gna" path="res://Scripts/enemigo_1.gd" id="1_fvh8t"]
 [ext_resource type="Texture2D" uid="uid://8mxk247yegtn" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Attack_2.png" id="2_fvh8t"]
+[ext_resource type="Script" uid="uid://cs4dmoqcf6dg1" path="res://components/hurtbox.gd" id="2_p72vh"]
 [ext_resource type="Texture2D" uid="uid://dagun3xsokicr" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Attack_3.png" id="3_p72vh"]
 [ext_resource type="Texture2D" uid="uid://db2syi4pqh44p" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Dead.png" id="4_hn1uk"]
 [ext_resource type="Texture2D" uid="uid://sijyii6tbo1t" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Hurt.png" id="5_crbyo"]
@@ -10,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://dh532a4uvo21y" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Run.png" id="7_ekuuh"]
 [ext_resource type="Texture2D" uid="uid://drldr3r1mb076" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Walk.png" id="8_uc47y"]
 [ext_resource type="Texture2D" uid="uid://cdenseg73xjfl" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai_Commander/Idle.png" id="9_1mhm5"]
+[ext_resource type="Script" uid="uid://mev8d5dvq02k" path="res://components/hitbox.gd" id="12_hn1uk"]
+[ext_resource type="Script" uid="uid://v4e05x5c7afs" path="res://components/health_component.gd" id="13_crbyo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vhuci"]
 radius = 9.0
@@ -675,6 +678,9 @@ animation = &"Enemy_attack3"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ekuuh"]
 animation = &"Enemy_hurt"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uc47y"]
+animation = &"Enemy_muerte"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p72vh"]
 animation = &"Enemy_walk"
 
@@ -771,10 +777,22 @@ states/Enemy_attack3/node = SubResource("AnimationNodeAnimation_fvhl5")
 states/Enemy_attack3/position = Vector2(566, 178)
 states/Enemy_hurt/node = SubResource("AnimationNodeAnimation_ekuuh")
 states/Enemy_hurt/position = Vector2(350, 178)
+states/Enemy_muerte/node = SubResource("AnimationNodeAnimation_uc47y")
+states/Enemy_muerte/position = Vector2(785, 231)
 states/Enemy_walk/node = SubResource("AnimationNodeAnimation_p72vh")
 states/Enemy_walk/position = Vector2(350, 19)
 transitions = ["Start", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_hn1uk"), "Enemy_Idle", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_crbyo"), "Enemy_walk", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_fvhl5"), "Enemy_walk", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_ekuuh"), "Enemy_Idle", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_uc47y"), "Enemy_attack1", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_1mhm5"), "Enemy_attack1", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_vhuci"), "Enemy_walk", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_limyy"), "Enemy_Idle", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_hr34j"), "Enemy_attack1", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_3l337"), "Enemy_attack2", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_x3t1o"), "Enemy_attack2", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_sshi8"), "Enemy_attack2", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_kundd"), "Enemy_walk", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_tvxv8"), "Enemy_Idle", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_ggeuy"), "Enemy_hurt", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_763fm"), "Enemy_hurt", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_ifqnj"), "Enemy_hurt", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_ndaoy"), "Enemy_hurt", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_eq8ro"), "Enemy_attack1", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_i8kkx"), "Enemy_attack2", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_wwv1j"), "Enemy_attack3", "Enemy_attack2", SubResource("AnimationNodeStateMachineTransition_hbuol"), "Enemy_attack3", "Enemy_attack1", SubResource("AnimationNodeStateMachineTransition_mipgj"), "Enemy_attack2", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_0y1o0"), "Enemy_attack1", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_klk3y"), "Enemy_attack3", "Enemy_hurt", SubResource("AnimationNodeStateMachineTransition_r5cod"), "Enemy_attack3", "Enemy_Idle", SubResource("AnimationNodeStateMachineTransition_os5ul"), "Enemy_attack3", "Enemy_walk", SubResource("AnimationNodeStateMachineTransition_ruo28"), "Enemy_walk", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_uuyxj"), "Enemy_Idle", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_rmmxw"), "Enemy_hurt", "Enemy_attack3", SubResource("AnimationNodeStateMachineTransition_gc6vf")]
 graph_offset = Vector2(-173, -39)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hn1uk"]
+radius = 12.0
+height = 70.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hn1uk"]
+bg_color = Color(0.0295066, 0.0295066, 0.0295065, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crbyo"]
+bg_color = Color(0.992157, 0, 0, 1)
 
 [node name="Enemy1" type="CharacterBody2D"]
 texture_filter = 1
@@ -792,6 +810,8 @@ texture = ExtResource("1_0owe6")
 hframes = 4
 
 [node name="Attack_area" type="Area2D" parent="Pivote"]
+script = ExtResource("12_hn1uk")
+damage = 60
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/Attack_area"]
 position = Vector2(27, -36)
@@ -812,3 +832,39 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_ekuuh")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_p72vh")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://cs4dmoqcf6dg1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-9, -33)
+shape = SubResource("CapsuleShape2D_hn1uk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -330.0
+offset_bottom = 67.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_hn1uk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_crbyo")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("13_crbyo")
+metadata/_custom_type_script = "uid://v4e05x5c7afs"

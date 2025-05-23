@@ -38,7 +38,7 @@ func start_combat():
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 4))
+		sequence.append(randi_range(1, 4)) # aqui cambiar a 1
 	emit_signal("combat_started")
 	show_next_prompt()
 
