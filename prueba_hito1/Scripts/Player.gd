@@ -132,17 +132,13 @@ func _physics_process(delta):
 func take_damage(from_position: Vector2):
 	if is_hurt or is_blocking:
 		return
-
 	is_hurt = true
 	playback.travel("Hurt")
-
 	# Calcular dirección desde el enemigo hacia el jugador
 	var knockback_dir = (global_position - from_position).normalized()
 	velocity = knockback_dir * knockback_strength
-
 	# Desactivar entrada (ej. movimiento y acciones)
 	await get_tree().create_timer(hurt_duration).timeout
-
 	is_hurt = false
 
 func hide_label():
@@ -157,8 +153,8 @@ func recibir_damage(_damage: float) -> void:
 	death()
 
 func death() -> void:
-	if dead:
-		return  # 👈 evita múltiples ejecuciones
+	#if dead:
+		#return  # 👈 evita múltiples ejecuciones
 	dead = true
 	collision_shape_2d.disabled = true
 	set_physics_process(false)

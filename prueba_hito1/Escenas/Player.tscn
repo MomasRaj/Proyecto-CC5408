@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://cs4dmoqcf6dg1" path="res://components/hurtbox.gd" id="21_pv6b1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bmxy"]
-size = Vector2(59, 19)
+size = Vector2(33.5, 50.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3cnb"]
 size = Vector2(34.7175, 53.2531)
@@ -87,6 +87,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ExtResource("2_urfe6")]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_t27sq"]
 resource_name = "Attack2"
@@ -140,6 +152,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ExtResource("9_mok4h")]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_3tm5s"]
 resource_name = "Attack3"
@@ -192,6 +216,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [ExtResource("10_t27sq")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_6tpbs"]
@@ -509,6 +545,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_1bmxy"]
@@ -831,8 +879,9 @@ damage = 50
 metadata/_custom_type_script = "uid://mev8d5dvq02k"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/Hitbox"]
-position = Vector2(-71, -35)
+position = Vector2(29.25, -31.25)
 shape = SubResource("RectangleShape2D_1bmxy")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivote"]
 position = Vector2(0, -64)
@@ -841,10 +890,11 @@ offset = Vector2(28, 0)
 hframes = 6
 
 [node name="BlockArea" type="Area2D" parent="Pivote/Sprite2D"]
+visible = false
 script = ExtResource("3_rvly3")
 
 [node name="Blockcollision" type="CollisionShape2D" parent="Pivote/Sprite2D/BlockArea"]
-position = Vector2(25, 34)
+position = Vector2(29, 33)
 shape = SubResource("RectangleShape2D_f3cnb")
 
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
@@ -852,11 +902,11 @@ position = Vector2(18, 0)
 script = ExtResource("11_3tm5s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/EnemyTrigger"]
-position = Vector2(7.5625, -34)
+position = Vector2(12, -34)
 shape = SubResource("RectangleShape2D_3tm5s")
 
 [node name="RayCast2D" type="RayCast2D" parent="Pivote"]
-position = Vector2(8, -61)
+position = Vector2(12, -61)
 rotation = -1.5708
 
 [node name="PromptUI" type="Node2D" parent="."]

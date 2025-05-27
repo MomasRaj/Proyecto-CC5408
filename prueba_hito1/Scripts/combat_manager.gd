@@ -9,6 +9,7 @@ extends Node
 @onready var combat_manager: Node = $"."
 @onready var block_area: Area2D = $"../Player/Pivote/Sprite2D/BlockArea"
 @onready var ray_cast_2d: RayCast2D = $"../Player/Pivote/RayCast2D"
+@onready var health_component: HealthComponent = $HealthComponent
 
 #Variables de combate
 var in_combat := false
@@ -38,7 +39,7 @@ func start_combat():
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 4)) # aqui cambiar a 1
+		sequence.append(randi_range(1, 4)) 
 	emit_signal("combat_started")
 	show_next_prompt()
 
@@ -89,7 +90,6 @@ func show_next_prompt():
 		player.take_damage(enemy_1.global_position)
 		print("¡Fallaste el parry!")
 		end_combat(false)
-
 
 func _on_parry_area_conect():
 	parry_conect=true

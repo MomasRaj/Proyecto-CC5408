@@ -32,9 +32,8 @@ var dead: bool = false
 func _ready():
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
-	if not(dead):
-		parry_notify_area.body_entered.connect(_on_notify_parry)
-		parry_notify_area.body_exited.connect(_on_notify_parry_end)
+	parry_notify_area.body_entered.connect(_on_notify_parry)
+	parry_notify_area.body_exited.connect(_on_notify_parry_end)
 	
 	health_component.health_changed.connect(_on_health_changed)
 	health_bar.value = health_component.health
@@ -85,8 +84,8 @@ func take_damage():
 	return
 	
 func _on_notify_parry(body: Node):
-	if dead:
-		return
+	#if dead:
+		#return
 	var player_ = body as Player
 	if player_:
 		combat_manager.enemy_list.append(self)
@@ -106,9 +105,9 @@ func death() -> void:
 	if dead:
 		return # Ya está muerto, no hacer nada
 	
-	dead = true	
+	dead = true
 	
-	# Desactivar lógica de combate y daño
+	# Desactivar lógica de combate y dañod
 	collision_shape_2d.disabled = true
 	parry_notify_area.monitoring = false
 	attack_area.monitoring = false

@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 func _on_area_entered(area: Area2D) -> void:
 	var hitbox = area as Hitbox
-	if hitbox:			
+	if hitbox:
 		if health_component: 
 			health_component.take_damage_v2(hitbox.damage)
 			hitbox.damage_dealt.emit()
