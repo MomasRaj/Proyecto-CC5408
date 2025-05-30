@@ -1,18 +1,19 @@
-[gd_scene load_steps=100 format=3 uid="uid://dul63mmxlpdc2"]
+[gd_scene load_steps=101 format=3 uid="uid://dul63mmxlpdc2"]
 
 [ext_resource type="Script" uid="uid://cecyegq5hlryp" path="res://Scripts/Player.gd" id="1_83e7o"]
 [ext_resource type="Script" uid="uid://mev8d5dvq02k" path="res://components/hitbox.gd" id="2_p50dg"]
-[ext_resource type="Texture2D" uid="uid://v5ro36qqodp5" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_1.png" id="2_urfe6"]
 [ext_resource type="Texture2D" uid="uid://bpeo1wwqf5lvp" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Idle.png" id="3_mok4h"]
 [ext_resource type="Script" uid="uid://cxh1i7aru7lyt" path="res://Scripts/block_area.gd" id="3_rvly3"]
 [ext_resource type="Texture2D" uid="uid://be55kqcfr7o5g" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Jump.png" id="4_t27sq"]
 [ext_resource type="Texture2D" uid="uid://cjvvay403e1t1" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Protection.png" id="5_3tm5s"]
 [ext_resource type="Texture2D" uid="uid://bpef7k2mttggu" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Run.png" id="6_qoh2p"]
+[ext_resource type="Texture2D" uid="uid://dcm2p7yv31dxc" path="res://Assets/Character/Ataque.png" id="7_bj1in"]
 [ext_resource type="Texture2D" uid="uid://csikc5wk23ljg" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Walk.png" id="7_gs42a"]
 [ext_resource type="Texture2D" uid="uid://dclucgx0ned2f" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Dead.png" id="8_f3cnb"]
 [ext_resource type="Texture2D" uid="uid://qljfh7w4fysq" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_2.png" id="9_mok4h"]
 [ext_resource type="Texture2D" uid="uid://dujoedr7yts3w" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_3.png" id="10_t27sq"]
 [ext_resource type="Script" uid="uid://4ncbtl5nex6t" path="res://Scripts/enemy_trigger.gd" id="11_3tm5s"]
+[ext_resource type="Texture2D" uid="uid://bov7dnpk04pna" path="res://Assets/Character/idle.png" id="11_bj1in"]
 [ext_resource type="Script" uid="uid://bela4vse5n481" path="res://Scripts/combat_ui.gd" id="12_qoh2p"]
 [ext_resource type="Texture2D" uid="uid://f6jr1tdo78bn" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Hurt.png" id="13_f3cnb"]
 [ext_resource type="AudioStream" uid="uid://jeea6hkp0vvs" path="res://sword-clash-241729.mp3" id="13_gs42a"]
@@ -37,31 +38,31 @@ height = 66.0
 
 [sub_resource type="Animation" id="Animation_8dcy0"]
 resource_name = "Attack1"
-length = 0.4
+length = 0.5
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Pivote/Sprite2D:offset")
+tracks/0/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(5, 0)]
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Pivote/Sprite2D:frame")
+tracks/1/path = NodePath("Pivote/Sprite2D:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_bj1in")]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -72,32 +73,20 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [4]
+"update": 1,
+"values": [5]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Pivote/Sprite2D:texture")
+tracks/3/path = NodePath("Pivote/Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [ExtResource("2_urfe6")]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [true, false]
+"values": [0, 1, 2, 3, 4]
 }
 
 [sub_resource type="Animation" id="Animation_t27sq"]
@@ -291,50 +280,38 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Pivote/Sprite2D:hframes")
+tracks/0/path = NodePath("Pivote/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [6]
+"update": 1,
+"values": [ExtResource("11_bj1in")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Pivote/Sprite2D:frame")
+tracks/1/path = NodePath("Pivote/Sprite2D:hframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3, 4, 5]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Pivote/Sprite2D:offset")
+tracks/2/path = NodePath("Pivote/Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(22, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Pivote/Sprite2D:texture")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [ExtResource("3_mok4h")]
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_rvly3"]
@@ -537,22 +514,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Pivote/Sprite2D:frame")
+tracks/3/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.001),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 5]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Pivote/Hitbox/CollisionShape2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -852,7 +817,7 @@ states/Walk/position = Vector2(233, 86)
 states/parry_initiate/node = SubResource("AnimationNodeAnimation_gl37d")
 states/parry_initiate/position = Vector2(534, 290)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_f3cnb"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_qoh2p"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_gs42a"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_8dcy0"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_7pm4f"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_gl37d"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_rvly3"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_p50dg"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_1bmxy"), "Run", "Jump", SubResource("AnimationNodeStateMachineTransition_pv6b1"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_bj1in"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_6tpbs"), "Jump", "Run", SubResource("AnimationNodeStateMachineTransition_gjle3"), "Idle", "Hurt", SubResource("AnimationNodeStateMachineTransition_6opxc"), "Walk", "Hurt", SubResource("AnimationNodeStateMachineTransition_j6ovw"), "Run", "Hurt", SubResource("AnimationNodeStateMachineTransition_otxe6"), "Hurt", "Run", SubResource("AnimationNodeStateMachineTransition_5u8ld"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_6pvmx"), "Hurt", "Walk", SubResource("AnimationNodeStateMachineTransition_vaor1"), "Walk", "Parry", SubResource("AnimationNodeStateMachineTransition_2nyvx"), "Idle", "Parry", SubResource("AnimationNodeStateMachineTransition_y3vq6"), "Run", "Parry", SubResource("AnimationNodeStateMachineTransition_3ktug"), "Jump", "Parry", SubResource("AnimationNodeStateMachineTransition_lhiie"), "Parry", "Run", SubResource("AnimationNodeStateMachineTransition_llvmj"), "Parry", "Idle", SubResource("AnimationNodeStateMachineTransition_a745i"), "Parry", "Jump", SubResource("AnimationNodeStateMachineTransition_5l3tp"), "Parry", "Walk", SubResource("AnimationNodeStateMachineTransition_u52jk"), "Parry", "Hurt", SubResource("AnimationNodeStateMachineTransition_0pthq"), "Hurt", "Parry", SubResource("AnimationNodeStateMachineTransition_dpj5d"), "Idle", "Attack1", SubResource("AnimationNodeStateMachineTransition_fo5vo"), "Walk", "Attack1", SubResource("AnimationNodeStateMachineTransition_ifsf6"), "Run", "Attack1", SubResource("AnimationNodeStateMachineTransition_8yb4h"), "Jump", "Attack1", SubResource("AnimationNodeStateMachineTransition_2tlv4"), "Attack1", "Idle", SubResource("AnimationNodeStateMachineTransition_nok5b"), "Attack1", "Walk", SubResource("AnimationNodeStateMachineTransition_lb05o"), "Attack1", "Run", SubResource("AnimationNodeStateMachineTransition_pekrw"), "Attack1", "Jump", SubResource("AnimationNodeStateMachineTransition_e8wbe"), "Attack1", "Parry", SubResource("AnimationNodeStateMachineTransition_b4xkn"), "Parry", "Attack1", SubResource("AnimationNodeStateMachineTransition_dkoka"), "Attack1", "Hurt", SubResource("AnimationNodeStateMachineTransition_keqmn"), "Hurt", "Attack1", SubResource("AnimationNodeStateMachineTransition_80cmd"), "parry_initiate", "Parry", SubResource("AnimationNodeStateMachineTransition_yg3pk"), "Parry", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_0b26r"), "Run", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_3pgbm"), "Idle", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_t4b1r"), "Walk", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_06f0b"), "Attack1", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_bioqa"), "Jump", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_umwv3"), "Hurt", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_ki2fu")]
-graph_offset = Vector2(-574, 77)
+graph_offset = Vector2(-225.329, 77)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pv6b1"]
 bg_color = Color(0.0295066, 0.0295066, 0.0295065, 1)
@@ -884,17 +849,16 @@ shape = SubResource("RectangleShape2D_1bmxy")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivote"]
-position = Vector2(0, -64)
+position = Vector2(-23, -38)
 texture = ExtResource("3_mok4h")
 offset = Vector2(28, 0)
 hframes = 6
 
 [node name="BlockArea" type="Area2D" parent="Pivote/Sprite2D"]
-visible = false
 script = ExtResource("3_rvly3")
 
 [node name="Blockcollision" type="CollisionShape2D" parent="Pivote/Sprite2D/BlockArea"]
-position = Vector2(29, 33)
+position = Vector2(48, 7)
 shape = SubResource("RectangleShape2D_f3cnb")
 
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
