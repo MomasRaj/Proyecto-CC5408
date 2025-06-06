@@ -9,9 +9,12 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	var hitbox = area as Hitbox
 	if hitbox:
-		if health_component: 
-			health_component.take_damage_v2(hitbox.damage)
+		# Si el owner es el jugador, no aplicamos daño directamente
+		if owner is Player:
+			# Solo emitir la señal, CombatManager se encarga del daño
 			hitbox.damage_dealt.emit()
-		#elif owner.has_method("recibir_damage"):
-		#	owner.recibir_damage(hitbox.damage)
-	#		hitbox.damage_dealt.emit()
+		
+		# Si es enemigo, sí aplicamos daño directamente
+		elif owner.has_method("recibir_damage"):
+			owner.recibir_damage(hitbox.damage)
+			hitbox.damage_dealt.emit()

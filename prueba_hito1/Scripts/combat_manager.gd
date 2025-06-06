@@ -39,15 +39,24 @@ func start_combat():
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 4)) 
+		sequence.append(randi_range(1, 1)) 
 	emit_signal("combat_started")
 	show_next_prompt()
 
 func end_combat(success: bool):
 	enemy_1.is_in_combat=false
-	if player.has_node("SaludComponente") and success == false:
-		var salud_componente = player.get_node("SaludComponente")
-		salud_componente.recibir_damage(10.0)
+	if success == false:
+		var salud_componente = player.get_node("HealthComponent")
+		salud_componente.take_damage_v2(10.0)
+	
+	#if success == false:
+		## Obtener el daño desde el hitbox real del enemigo
+		#var hitbox = enemy_1.get_node_or_null("Pivote/Attack_area/Hitbox") as Hitbox
+		#if hitbox:
+			#player.recibir_damage(hitbox.damage)
+		#else:
+			#player.recibir_damage(10.0)
+		
 	in_combat = false
 	emit_signal("combat_ended", success)
 	# Ocultar el prompt UI si existe

@@ -812,7 +812,7 @@ hframes = 4
 
 [node name="Attack_area" type="Area2D" parent="Pivote"]
 script = ExtResource("12_hn1uk")
-damage = 60
+damage = 40
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/Attack_area"]
 position = Vector2(27, -36)

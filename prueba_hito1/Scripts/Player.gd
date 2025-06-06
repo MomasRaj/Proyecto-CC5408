@@ -45,6 +45,8 @@ var AIR_RESISTANCE = 200
 # referencias a la salud
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var hurtbox: Hurtbox = $Hurtbox
+@onready var hurtbox_shape: CollisionShape2D = $Hurtbox/CollisionShape2D
 
 
 func _ready():
@@ -139,6 +141,7 @@ func take_damage(from_position: Vector2):
 	velocity = knockback_dir * knockback_strength
 	# Desactivar entrada (ej. movimiento y acciones)
 	await get_tree().create_timer(hurt_duration).timeout
+	velocity = Vector2.ZERO
 	is_hurt = false
 
 func hide_label():
@@ -148,9 +151,10 @@ func hide_label():
 			
 			
 func recibir_damage(_damage: float) -> void:
-	if is_blocking or is_hurt:
+	if is_blocking or is_hurt or dead:
 		return
-	death()
+	if health_component.health <= 0:
+		death()
 
 func death() -> void:
 	#if dead:

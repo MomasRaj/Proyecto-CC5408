@@ -29,6 +29,8 @@ var dead: bool = false
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
 
+@onready var Hitbox_damage: Hitbox = $Pivote/Attack_area
+
 func _ready():
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
@@ -96,10 +98,12 @@ func _on_notify_parry_end(body:Node):
 		combat_manager.enemy_list.erase(self)
 
 func recibir_damage(damage: float) -> void:
-	if dead:
-		return
-	Debug.log("auch: %d damage %s" % [damage, "aaa"])
-	death()
+	health_component.take_damage_v2(damage)
+
+	if health_component.health <= 0:
+		death()
+	else:
+		playback.travel("Hurt")  # Opcional, animación de golpe
 
 func death() -> void:
 	if dead:
