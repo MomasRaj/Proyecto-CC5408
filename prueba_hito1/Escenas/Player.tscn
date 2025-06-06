@@ -819,15 +819,15 @@ states/parry_initiate/position = Vector2(534, 290)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_f3cnb"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_qoh2p"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_gs42a"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_8dcy0"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_7pm4f"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_gl37d"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_rvly3"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_p50dg"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_1bmxy"), "Run", "Jump", SubResource("AnimationNodeStateMachineTransition_pv6b1"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_bj1in"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_6tpbs"), "Jump", "Run", SubResource("AnimationNodeStateMachineTransition_gjle3"), "Idle", "Hurt", SubResource("AnimationNodeStateMachineTransition_6opxc"), "Walk", "Hurt", SubResource("AnimationNodeStateMachineTransition_j6ovw"), "Run", "Hurt", SubResource("AnimationNodeStateMachineTransition_otxe6"), "Hurt", "Run", SubResource("AnimationNodeStateMachineTransition_5u8ld"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_6pvmx"), "Hurt", "Walk", SubResource("AnimationNodeStateMachineTransition_vaor1"), "Walk", "Parry", SubResource("AnimationNodeStateMachineTransition_2nyvx"), "Idle", "Parry", SubResource("AnimationNodeStateMachineTransition_y3vq6"), "Run", "Parry", SubResource("AnimationNodeStateMachineTransition_3ktug"), "Jump", "Parry", SubResource("AnimationNodeStateMachineTransition_lhiie"), "Parry", "Run", SubResource("AnimationNodeStateMachineTransition_llvmj"), "Parry", "Idle", SubResource("AnimationNodeStateMachineTransition_a745i"), "Parry", "Jump", SubResource("AnimationNodeStateMachineTransition_5l3tp"), "Parry", "Walk", SubResource("AnimationNodeStateMachineTransition_u52jk"), "Parry", "Hurt", SubResource("AnimationNodeStateMachineTransition_0pthq"), "Hurt", "Parry", SubResource("AnimationNodeStateMachineTransition_dpj5d"), "Idle", "Attack1", SubResource("AnimationNodeStateMachineTransition_fo5vo"), "Walk", "Attack1", SubResource("AnimationNodeStateMachineTransition_ifsf6"), "Run", "Attack1", SubResource("AnimationNodeStateMachineTransition_8yb4h"), "Jump", "Attack1", SubResource("AnimationNodeStateMachineTransition_2tlv4"), "Attack1", "Idle", SubResource("AnimationNodeStateMachineTransition_nok5b"), "Attack1", "Walk", SubResource("AnimationNodeStateMachineTransition_lb05o"), "Attack1", "Run", SubResource("AnimationNodeStateMachineTransition_pekrw"), "Attack1", "Jump", SubResource("AnimationNodeStateMachineTransition_e8wbe"), "Attack1", "Parry", SubResource("AnimationNodeStateMachineTransition_b4xkn"), "Parry", "Attack1", SubResource("AnimationNodeStateMachineTransition_dkoka"), "Attack1", "Hurt", SubResource("AnimationNodeStateMachineTransition_keqmn"), "Hurt", "Attack1", SubResource("AnimationNodeStateMachineTransition_80cmd"), "parry_initiate", "Parry", SubResource("AnimationNodeStateMachineTransition_yg3pk"), "Parry", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_0b26r"), "Run", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_3pgbm"), "Idle", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_t4b1r"), "Walk", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_06f0b"), "Attack1", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_bioqa"), "Jump", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_umwv3"), "Hurt", "parry_initiate", SubResource("AnimationNodeStateMachineTransition_ki2fu")]
 graph_offset = Vector2(-225.329, 77)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pv6b1"]
-bg_color = Color(0.0295066, 0.0295066, 0.0295065, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj1in"]
-bg_color = Color(0.14902, 0.705882, 0, 1)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bj1in"]
 radius = 13.0
 height = 88.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj1in"]
+bg_color = Color(0.0295066, 0.0295066, 0.0295065, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6tpbs"]
+bg_color = Color(0.14902, 0.705882, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
@@ -926,23 +926,6 @@ metadata/_custom_type_script = "uid://dypx6h151m6ot"
 script = ExtResource("16_7pm4f")
 metadata/_custom_type_script = "uid://dwhyjerw6dhbe"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_right = 330.0
-offset_bottom = 67.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_pv6b1")
-theme_override_styles/fill = SubResource("StyleBoxFlat_bj1in")
-
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("20_1bmxy")
 metadata/_custom_type_script = "uid://v4e05x5c7afs"
@@ -955,6 +938,25 @@ metadata/_custom_type_script = "uid://cs4dmoqcf6dg1"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(-3, -36)
 shape = SubResource("CapsuleShape2D_bj1in")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 332.0
+offset_bottom = 65.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer2/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_bj1in")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6tpbs")
 
 [connection signal="area_entered" from="Pivote/Sprite2D/BlockArea" to="Pivote/Sprite2D/BlockArea" method="_on_area_entered"]
 [connection signal="area_exited" from="Pivote/Sprite2D/BlockArea" to="Pivote/Sprite2D/BlockArea" method="_on_area_exited"]

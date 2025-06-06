@@ -7,6 +7,7 @@ class_name Enemy
 @onready var attack_area: Area2D = $Pivote/Attack_area
 @onready var combat_manager: Node = $"../CombatManager"
 @onready var parry_notify_area: Area2D = $Pivote/ParryNotifyArea
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
@@ -22,9 +23,10 @@ var can_attack := true
 var is_attacking:= false
 var is_in_combat:=false
 var current_attack_anim: String= ""
-
+var can_get_hit := false
 var dead: bool = false
-
+var knockback_strength = 100
+var knockback: bool = false
 # referencias a la salud
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
@@ -60,7 +62,8 @@ func _physics_process(delta):
 	else:
 		velocity.y = 0
 	
-	velocity.x = direction * WALK_SPEED
+	if !knockback:
+		velocity.x = direction * WALK_SPEED
 	
 	move_and_slide()
 	if abs(direction) > 0.1:
@@ -78,13 +81,19 @@ func attack():
 	playback.travel("Enemy_walk")
 
 func take_damage():
-	if dead:
+	if can_get_hit:
+		if dead:
+			return
+		playback.travel("Enemy_hurt")
+		await get_tree().create_timer(1).timeout
+		if dead:
+			return
+		
+		playback.travel("Enemy_Idle")
+		
 		return
-	playback.travel("Enemy_hurt")
-	await get_tree().create_timer(1).timeout
-	playback.travel("Enemy_Idle")
-	return
-	
+	else:
+		pass
 func _on_notify_parry(body: Node):
 	#if dead:
 		#return
@@ -98,14 +107,24 @@ func _on_notify_parry_end(body:Node):
 		combat_manager.enemy_list.erase(self)
 
 func recibir_damage(damage: float) -> void:
-	health_component.take_damage_v2(damage)
-
-	if health_component.health <= 0:
-		death()
+	if can_get_hit:
+		knockback = true
+		health_component.take_damage_v2(damage)
+		var knockback_dir = (global_position -player.position).normalized()
+		velocity = knockback_dir * knockback_strength
+		if health_component.health <= 0:
+			death()
+		else:
+			playback.travel("Enemy_hurt")  # Opcional, animación de golpe
+			await animation_tree.animation_finished
+			knockback = false
 	else:
-		playback.travel("Hurt")  # Opcional, animación de golpe
+		playback.travel("Enemy_parry")
+		audio_stream_player_2d.play()
+	
 
 func death() -> void:
+	
 	if dead:
 		return # Ya está muerto, no hacer nada
 	

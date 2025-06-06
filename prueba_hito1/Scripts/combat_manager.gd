@@ -9,7 +9,6 @@ extends Node
 @onready var combat_manager: Node = $"."
 @onready var block_area: Area2D = $"../Player/Pivote/Sprite2D/BlockArea"
 @onready var ray_cast_2d: RayCast2D = $"../Player/Pivote/RayCast2D"
-@onready var health_component: HealthComponent = $HealthComponent
 
 #Variables de combate
 var in_combat := false
@@ -39,7 +38,7 @@ func start_combat():
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 1)) 
+		sequence.append(randi_range(1, 4)) 
 	emit_signal("combat_started")
 	show_next_prompt()
 
@@ -83,6 +82,7 @@ func _input(_event):
 
 func show_next_prompt():
 	if current_index >= sequence.size():
+		enemy_1.can_get_hit=true
 		enemy_1.take_damage()
 		print("¡Secuencia completada!")
 		end_combat(true)
