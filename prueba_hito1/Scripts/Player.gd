@@ -1,5 +1,10 @@
-class_name  Player
+class_name Player
 extends CharacterBody2D
+
+# Estados
+enum State { IDLE, MOVING, ATTACKING, BLOCKING, HURT, DEAD, AIR }
+var state = State.IDLE
+
 # Variables de movimiento
 var WALK_SPEED = 100.0
 var RUN_SPEED = 300.0
@@ -48,7 +53,6 @@ var AIR_RESISTANCE = 200
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hurtbox_shape: CollisionShape2D = $Hurtbox/CollisionShape2D
 
-
 func _ready():
 	combat_manager.combat_started.connect(_on_combat_started)
 	combat_manager.combat_ended.connect(_on_combat_ended)
@@ -57,6 +61,7 @@ func _ready():
 	health_bar.value = health_component.health
 	health_bar.max_value = health_component.max_health
 	health_component.died.connect(death)
+	animation_tree.animation_finished.connect(_on_AnimationTree_animation_finished)
 
 func _on_combat_started():
 	is_in_combat=true
@@ -66,90 +71,123 @@ func _on_combat_ended(success: bool):
 	is_in_combat = false
 	is_blocking = false
 
-
 func _physics_process(delta):
-	var direction = Input.get_axis("entry_left","entry_right")
-	if is_hurt:
-		move_and_slide()
-		return
-	if direction == 1:
-		last_direction = 1
-	elif direction == -1:
-		last_direction = -1
-	if Input.is_action_pressed("entry_run"):
-		MAX_SPEED = RUN_SPEED
-	else:
-		MAX_SPEED = WALK_SPEED
-	
-	if dead:
-		return
-	
-	# Aplicar gravedad
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
-		if salto < 2 and Input.is_action_just_pressed("entry_jump"):
-			velocity.y = JUMP_VELOCITY
-			salto += 1
-	# Salto
-	if is_on_floor() and not is_blocking and not is_in_combat:
-		if Input.is_action_just_pressed("entry_jump"):
-			velocity.y=JUMP_VELOCITY
+	match state:
+		State.IDLE, State.MOVING:
+			handle_movement(delta)
+		State.ATTACKING:
+			pass
+		State.HURT:
+			move_and_slide()
+		State.DEAD:
+			pass
+		State.AIR:
+			handle_air_movement(delta)
+		State.BLOCKING:
+			pass
 
-	#Animaciones
-	if Input.is_action_just_pressed("entry_attack") and not is_blocking and not is_in_combat and is_on_floor():
+func handle_movement(delta):
+	var direction = Input.get_axis("entry_left", "entry_right")
+
+	if direction != 0:
+		last_direction = direction
+		pivote.scale.x = sign(direction)
+
+	MAX_SPEED = RUN_SPEED if Input.is_action_pressed("entry_run") else WALK_SPEED
+	velocity.x = direction * MAX_SPEED
+
+	if Input.is_action_just_pressed("entry_jump"):
+		velocity.y = JUMP_VELOCITY
+		salto += 1
+		state = State.AIR
+		playback.travel("Jump")
+		return
+
+	if Input.is_action_just_pressed("entry_attack") and is_on_floor():
+		state = State.ATTACKING
+		velocity.x = 0
 		playback.travel("Attack1")
 		return
-	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4") or Input.is_action_just_pressed("entry_parry_initiate")):
+	
+	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4")):
+		state = State.BLOCKING
+		#velocity.x=0
 		playback.travel("Parry")
 		return
-	velocity.x = direction*max(MAX_SPEED,abs(velocity.x)) 
+	
+	if direction == 0:
+		playback.travel("Idle")
+		state = State.IDLE
+	else:
+		playback.travel("Run" if MAX_SPEED == RUN_SPEED else "Walk")
+		state = State.MOVING
+
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+		state = State.AIR
+
+	move_and_slide()
+
+func handle_air_movement(delta):
+	var direction = Input.get_axis("entry_left", "entry_right")
+	if direction != 0:
+		last_direction = direction
+		pivote.scale.x = sign(direction)
+
+	if salto < 2 and Input.is_action_just_pressed("entry_jump"):
+		velocity.y = JUMP_VELOCITY
+		salto += 1
+
+	if Input.is_action_just_pressed("entry_run") and air_dash < 2:
+		AIR_VELOCITY = last_direction * AIRDASH_SPEED
+		velocity.x = AIR_VELOCITY
+		air_dash += 1
+
+	if air_dash == 2:
+		AIR_VELOCITY -= delta * AIR_RESISTANCE * last_direction * 3
+		if abs(AIR_VELOCITY) < 10:
+			AIR_VELOCITY = 0
+		velocity.x = AIR_VELOCITY
+
+	velocity.y += GRAVITY * delta
+
+	if velocity.y < 0:
+		playback.travel("Jump")
+	else:
+		playback.travel("Fall")
+
 	move_and_slide()
 
 	if is_on_floor():
+		state = State.IDLE
 		salto = 1
 		air_dash = 1
-		if direction!=0:
-			pivote.scale.x=sign(direction)
-		if abs(velocity.x)==RUN_SPEED:
-			playback.travel("Run")
-		elif abs(velocity.x)==WALK_SPEED:
-			playback.travel("Walk")
-		elif abs(velocity.x)==0:
-			playback.travel("Idle")
-	else:
-		if direction!=0:
-			pivote.scale.x=sign(direction)
-		if velocity.y<0:
-			playback.travel("Jump")
-		if Input.is_action_just_pressed("entry_run") and air_dash < 2: #dash
-			AIR_VELOCITY = last_direction * AIRDASH_SPEED
-			velocity.x = AIR_VELOCITY
-			air_dash += 1
-		if air_dash == 2:
-			AIR_VELOCITY -= delta * AIR_RESISTANCE * last_direction * 3
-			if abs(AIR_VELOCITY) < 10:
-				AIR_VELOCITY = 0
-			velocity.x = AIR_VELOCITY
+
+func _on_AnimationTree_animation_finished(anim_name):
+	if anim_name == "Attack1" and state == State.ATTACKING:
+		state = State.IDLE
+	elif anim_name == "Parry" and state == State.BLOCKING:
+		state= State.IDLE
+		is_blocking = false
 
 func take_damage(from_position: Vector2):
 	if is_hurt or is_blocking:
 		return
 	is_hurt = true
+	state = State.HURT
 	playback.travel("Hurt")
-	# Calcular dirección desde el enemigo hacia el jugador
 	var knockback_dir = (global_position - from_position).normalized()
 	velocity = knockback_dir * knockback_strength
-	# Desactivar entrada (ej. movimiento y acciones)
 	await get_tree().create_timer(hurt_duration).timeout
 	velocity = Vector2.ZERO
 	is_hurt = false
+	state = State.IDLE
 
 func hide_label():
 	if player.has_node("PromptUI"):
 		if player.get_node("PromptUI").has_node("PromptLabel"):
 			player.get_node("PromptUI").get_node("PromptLabel").hide()
-			
-			
+
 func recibir_damage(_damage: float) -> void:
 	if is_blocking or is_hurt or dead:
 		return
@@ -157,26 +195,22 @@ func recibir_damage(_damage: float) -> void:
 		death()
 
 func death() -> void:
-	#if dead:
-		#return  # 👈 evita múltiples ejecuciones
+	if dead:
+		return
 	dead = true
+	state = State.DEAD
 	collision_shape_2d.disabled = true
 	set_physics_process(false)
-	
 	set_collision_layer(0)
 	set_collision_mask(0)
-	
 	playback.travel("Muerte")
 	await animation_tree.animation_finished
 	animation_tree.active = false
-
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 1)
 	await get_tree().create_timer(1).timeout
-	
 	queue_free()
-
 	get_tree().reload_current_scene()
-		
+
 func _on_health_changed(value: float) -> void:
 	health_bar.value = value

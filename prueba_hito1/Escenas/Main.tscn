@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bhy17t8ykfree"]
+[gd_scene load_steps=20 format=4 uid="uid://bhy17t8ykfree"]
 
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ig2kn"]
 [ext_resource type="Texture2D" uid="uid://epcaq6yaqyka" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/background/background_layer_1.png" id="7_u12ih"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dul63mmxlpdc2" path="res://Escenas/Player.tscn" id="9_dc6jj"]
 [ext_resource type="Texture2D" uid="uid://cod2l02fwb4bi" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/background/background_layer_3.png" id="9_t36bp"]
 [ext_resource type="Texture2D" uid="uid://c33cyx71qppws" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/oak_woods_tileset.png" id="10_i2xo1"]
-[ext_resource type="Script" uid="uid://cmv6er3y0xl0l" path="res://Scripts/combat_manager.gd" id="11_u12ih"]
+[ext_resource type="Script" uid="uid://b4xa25fqkvjed" path="res://Scripts/game_manager.gd" id="11_8fxbh"]
+[ext_resource type="Script" uid="uid://bv07xn5i7d0fu" path="res://Scripts/combat_manager.gd" id="11_u12ih"]
+[ext_resource type="Script" uid="uid://cd4fqq7l2ef47" path="res://Scripts/ui.gd" id="12_u12ih"]
 [ext_resource type="PackedScene" uid="uid://cdvaggr452s2t" path="res://Escenas/Enemigo1.tscn" id="13_ig2kn"]
 [ext_resource type="AudioStream" uid="uid://jeea6hkp0vvs" path="res://sword-clash-241729.mp3" id="13_t36bp"]
 [ext_resource type="PackedScene" uid="uid://dpcmbcp2jlf4p" path="res://ui/Menu.tscn" id="14_t36bp"]
@@ -473,7 +475,7 @@ script = ExtResource("1_ig2kn")
 
 [node name="Player" parent="." instance=ExtResource("9_dc6jj")]
 z_index = 1
-position = Vector2(-215, 144)
+position = Vector2(-204, 145)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(215, -144)
@@ -481,6 +483,14 @@ position = Vector2(215, -144)
 [node name="Enemy1" parent="." instance=ExtResource("13_ig2kn")]
 z_index = 1
 position = Vector2(382, 143)
+
+[node name="Enemy2" parent="." instance=ExtResource("13_ig2kn")]
+z_index = 1
+position = Vector2(270, 141)
+
+[node name="Enemy3" parent="." instance=ExtResource("13_ig2kn")]
+z_index = 1
+position = Vector2(847, 141)
 
 [node name="CombatManager" type="Node" parent="."]
 script = ExtResource("11_u12ih")
@@ -522,3 +532,15 @@ stream = ExtResource("13_t36bp")
 
 [node name="Main menu" parent="CanvasLayer" instance=ExtResource("14_t36bp")]
 visible = false
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("11_8fxbh")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("12_u12ih")
+
+[node name="Label" type="Label" parent="UI"]
+offset_left = 326.0
+offset_top = 203.0
+offset_right = 427.0
+offset_bottom = 226.0

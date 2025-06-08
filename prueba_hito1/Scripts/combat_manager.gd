@@ -5,7 +5,6 @@ extends Node
 @export var attack_interval := 1.0
 @export var sequence_lenght := 4
 @onready var player: Player = $"../Player"
-@onready var enemy_1: Enemy = $"../Enemy1"
 @onready var combat_manager: Node = $"."
 @onready var block_area: Area2D = $"../Player/Pivote/Sprite2D/BlockArea"
 @onready var ray_cast_2d: RayCast2D = $"../Player/Pivote/RayCast2D"
@@ -31,31 +30,30 @@ signal combat_ended(success: bool)
 func _ready():
 	block_area.parry_area_out.connect(_on_parry_area_out)
 	block_area.parry_area_contact.connect(_on_parry_area_conect)
-
+	player.hurtbox.damage_attempted.connect(_on_player_damage_attempted)
+	
 func start_combat():
-	enemy_1.is_in_combat=true
+	enemy_list =[]
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if not enemy.dead:
+			enemy_list.append(enemy)
+			enemy.can_get_hit=false
+			enemy.is_in_combat=true
 	in_combat = true
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 4)) 
+		sequence.append(randi_range(1, 1)) 
 	emit_signal("combat_started")
 	show_next_prompt()
 
 func end_combat(success: bool):
-	enemy_1.is_in_combat=false
+	for enemy in enemy_list:	
+		enemy.is_in_combat=false
 	if success == false:
 		var salud_componente = player.get_node("HealthComponent")
 		salud_componente.take_damage_v2(10.0)
-	
-	#if success == false:
-		## Obtener el daño desde el hitbox real del enemigo
-		#var hitbox = enemy_1.get_node_or_null("Pivote/Attack_area/Hitbox") as Hitbox
-		#if hitbox:
-			#player.recibir_damage(hitbox.damage)
-		#else:
-			#player.recibir_damage(10.0)
-		
+
 	in_combat = false
 	emit_signal("combat_ended", success)
 	# Ocultar el prompt UI si existe
@@ -67,23 +65,24 @@ func _input(_event):
 	if not in_combat or not parry_conect or input_received:
 		return
 	if Input.is_action_just_pressed("parry_random%d"%prompt_key) and parry_conect and enemy_list.size() and ray_cast_2d.is_colliding() and ray_cast_2d.get_collider() in enemy_list:
-		
 		print("Parry exitoso en %d" % prompt_key)
 		input_received = true
 		audio_stream_player_2d.play()
 		current_index += 1
-		
-		var duration = enemy_1.animation_tree.get_animation(enemy_1.current_attack_anim).length
+		var collider= ray_cast_2d.get_collider()
+		var duration = collider.animation_tree.get_animation(collider.current_attack_anim).length
 		await get_tree().create_timer(duration).timeout
 		
 		show_next_prompt()
-	else:
-		end_combat(false)
+
 
 func show_next_prompt():
 	if current_index >= sequence.size():
-		enemy_1.can_get_hit=true
-		enemy_1.take_damage()
+		if ray_cast_2d.is_colliding():
+			var collider = ray_cast_2d.get_collider()
+			if collider is Enemy and collider in enemy_list:
+				collider.can_get_hit=true
+				collider.take_damage()
 		print("¡Secuencia completada!")
 		end_combat(true)
 		player.get_node("PromptUI").get_node("PromptLabel").hide()
@@ -94,11 +93,16 @@ func show_next_prompt():
 	print("Presiona: ", prompt_key)
 	
 	player.get_node("PromptUI").show_prompt(str(prompt_key))
-	await enemy_1.attack()
-	if not input_received:
-		player.take_damage(enemy_1.global_position)
-		print("¡Fallaste el parry!")
-		end_combat(false)
+	if ray_cast_2d.is_colliding():
+		var collider = ray_cast_2d.get_collider()
+		if collider is Enemy and collider in enemy_list:
+			await collider.attack()
+
+func _on_player_damage_attempted(from_position: Vector2, damage: float) -> void:
+	if not in_combat or input_received:
+		return
+	player.take_damage(from_position)
+	end_combat(false)
 
 func _on_parry_area_conect():
 	parry_conect=true

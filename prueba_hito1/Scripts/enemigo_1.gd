@@ -1,5 +1,8 @@
 extends CharacterBody2D
 class_name Enemy
+
+signal enemy_died
+
 @onready var player: Player = get_node("/root/MainEscene/Player")
 @onready var pivote: Node2D = $Pivote
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -34,6 +37,7 @@ var knockback: bool = false
 @onready var Hitbox_damage: Hitbox = $Pivote/Attack_area
 
 func _ready():
+	add_to_group("enemies")
 	combat_manager.combat_ended.connect(_on_combat_ended)
 	animation_tree.active = true
 	parry_notify_area.body_entered.connect(_on_notify_parry)
@@ -54,8 +58,7 @@ func _physics_process(delta):
 	if dead:
 		return
 	var direction = sign(player.global_position.x - global_position.x)
-	
-	
+
 	# Aplicar gravedad
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -98,7 +101,7 @@ func _on_notify_parry(body: Node):
 	#if dead:
 		#return
 	var player_ = body as Player
-	if player_:
+	if player_ and not self in combat_manager.enemy_list:
 		combat_manager.enemy_list.append(self)
 
 func _on_notify_parry_end(body:Node):
@@ -124,16 +127,14 @@ func recibir_damage(damage: float) -> void:
 	
 
 func death() -> void:
-	
 	if dead:
-		return # Ya está muerto, no hacer nada
-	
+		return
 	dead = true
-	
-	# Desactivar lógica de combate y dañod
-	collision_shape_2d.disabled = true
-	parry_notify_area.monitoring = false
-	attack_area.monitoring = false
+	enemy_died.emit()
+	# Desactivar lógica de combate y daño de forma diferida para evitar errores
+	collision_shape_2d.call_deferred("set_disabled", true)
+	parry_notify_area.call_deferred("set_monitoring", false)
+	attack_area.call_deferred("set_monitoring", false)
 	set_physics_process(false)
 	
 	set_collision_layer(0)

@@ -3,6 +3,7 @@ extends Node
 
 signal died
 signal health_changed(value)
+signal player_died
 
 @export var health: float = 100:
 	set(value):
@@ -16,3 +17,5 @@ signal health_changed(value)
 
 func take_damage_v2(damage: float) -> void:
 	health -= damage
+	if health <=0.0:
+		player_died.emit()

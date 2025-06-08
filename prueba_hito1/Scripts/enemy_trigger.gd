@@ -10,9 +10,8 @@ func _ready() -> void:
 	timer.timeout.connect(_on_block_time_over)
 	add_child(timer)
 
-
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Enemy1":
+	if body.is_in_group("enemies"):
 		timer.start()
 		print("Enemigo detectado!")
 
