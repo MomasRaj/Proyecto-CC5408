@@ -38,18 +38,18 @@ func start_combat():
 		if not enemy.dead:
 			enemy_list.append(enemy)
 			enemy.can_get_hit=false
-			enemy.is_in_combat=true
+			enemy.state=enemy.State.ATTACKING
 	in_combat = true
 	current_index = 0
 	sequence = []
 	for i in range(sequence_lenght):
-		sequence.append(randi_range(1, 1)) 
+		sequence.append(randi_range(1, 4)) 
 	emit_signal("combat_started")
 	show_next_prompt()
 
 func end_combat(success: bool):
 	for enemy in enemy_list:	
-		enemy.is_in_combat=false
+		enemy.state=enemy.State.ATTACKING
 	if success == false:
 		var salud_componente = player.get_node("HealthComponent")
 		salud_componente.take_damage_v2(10.0)

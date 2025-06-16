@@ -20,9 +20,6 @@ func _on_enemy_died():
 	if game_ended:
 		return
 	enemie_list = enemie_list.filter(func(e): return not e.dead)
-	for e in enemie_list:
-		print(e.name, " dead:", e.dead)
-	print("Enemigos restantes (dead == false): ", enemie_list.size())
 	if enemie_list.is_empty():
 		_show_victory()
 

@@ -19,11 +19,11 @@ var is_blocking: bool = false
 var parry_area_contact: bool = false
 var is_hurt: bool= false
 var knockback_strength := 300
-
+var can_attack : bool = true
 var dead: bool = false
 
 # Cooldowns
-var ATTACK_COOLDOWN = 0.6
+var ATTACK_COOLDOWN = 0.7
 var PARRY_COOLDOWN = 0.5
 var hurt_duration := 0.6
 # Doble salto
@@ -37,6 +37,9 @@ var last_direction = 0
 var AIR_VELOCITY = 0
 # Resitencia aire
 var AIR_RESISTANCE = 200
+
+@onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
+
 
 # Referencias a nodos
 @onready var player: Player = $"."
@@ -88,7 +91,7 @@ func _physics_process(delta):
 
 func handle_movement(delta):
 	var direction = Input.get_axis("entry_left", "entry_right")
-
+	
 	if direction != 0:
 		last_direction = direction
 		pivote.scale.x = sign(direction)
@@ -103,10 +106,12 @@ func handle_movement(delta):
 		playback.travel("Jump")
 		return
 
-	if Input.is_action_just_pressed("entry_attack") and is_on_floor():
+	if Input.is_action_just_pressed("entry_attack") and is_on_floor() and can_attack:
+		can_attack = false
 		state = State.ATTACKING
 		velocity.x = 0
 		playback.travel("Attack1")
+		attack_cooldown_timer.start(ATTACK_COOLDOWN)
 		return
 	
 	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4")):
@@ -134,7 +139,7 @@ func handle_air_movement(delta):
 		last_direction = direction
 		pivote.scale.x = sign(direction)
 
-	if salto < 2 and Input.is_action_just_pressed("entry_jump"):
+	if salto < 3 and Input.is_action_just_pressed("entry_jump"):
 		velocity.y = JUMP_VELOCITY
 		salto += 1
 
@@ -214,3 +219,6 @@ func death() -> void:
 
 func _on_health_changed(value: float) -> void:
 	health_bar.value = value
+
+func _on_attack_cooldown_timer_timeout() -> void:
+	can_attack = true
