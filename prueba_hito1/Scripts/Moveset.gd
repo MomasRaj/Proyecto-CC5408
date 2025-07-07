@@ -16,4 +16,7 @@ var Specials : Dictionary = {
 	["K"]: "kick",
 	["A"]: "Attack1",
 	["P"]: "punch",
+	["D","K"]: "sweep",
+	["R","D","R","A"]: "upslash", 
+	["R","A"]: "Attack2"
 }

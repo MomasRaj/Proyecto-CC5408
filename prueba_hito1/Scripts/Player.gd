@@ -108,14 +108,6 @@ func handle_movement(delta):
 		state = State.AIR
 		playback.travel("Jump")
 		return
-
-	if Input.is_action_just_pressed("entry_attack") and is_on_floor() and can_attack:
-		can_attack = false
-		state = State.ATTACKING
-		velocity.x = 0
-		playback.travel("Attack1")
-		attack_cooldown_timer.start(ATTACK_COOLDOWN)
-		return
 	
 	if is_in_combat and (Input.is_action_just_pressed("parry_random1") or Input.is_action_just_pressed("parry_random2") or Input.is_action_just_pressed("parry_random3") or Input.is_action_just_pressed("parry_random4")):
 		state = State.BLOCKING

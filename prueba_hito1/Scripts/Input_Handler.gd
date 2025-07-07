@@ -93,7 +93,7 @@ func PlaySpecialMove(move_name: String) -> void:
 	if move_name == "Proyectile":
 		ShootProjectile()
 		
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	_isAttacking = false
 	
 	
