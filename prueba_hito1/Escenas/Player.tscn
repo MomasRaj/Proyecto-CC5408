@@ -6,23 +6,23 @@
 [ext_resource type="Texture2D" uid="uid://dcm2p7yv31dxc" path="res://Assets/Character/Ataque.png" id="7_bj1in"]
 [ext_resource type="Texture2D" uid="uid://dclucgx0ned2f" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Dead.png" id="8_f3cnb"]
 [ext_resource type="Texture2D" uid="uid://qljfh7w4fysq" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_2.png" id="9_mok4h"]
-[ext_resource type="Texture2D" uid="uid://biwt4y081wffs" path="res://Assets/hurt-35cb.png" id="10_bj1in"]
+[ext_resource type="Texture2D" uid="uid://biwt4y081wffs" path="res://Assets/Character/hurt-35cb.png" id="10_bj1in"]
 [ext_resource type="Texture2D" uid="uid://dujoedr7yts3w" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_3.png" id="10_t27sq"]
 [ext_resource type="Script" uid="uid://4ncbtl5nex6t" path="res://Scripts/enemy_trigger.gd" id="11_3tm5s"]
 [ext_resource type="Texture2D" uid="uid://bov7dnpk04pna" path="res://Assets/Character/idle.png" id="11_bj1in"]
-[ext_resource type="Texture2D" uid="uid://dymg3vhyvnc2j" path="res://Assets/jump-8751.png" id="12_bj1in"]
+[ext_resource type="Texture2D" uid="uid://dymg3vhyvnc2j" path="res://Assets/Character/jump-8751.png" id="12_bj1in"]
 [ext_resource type="Script" uid="uid://bela4vse5n481" path="res://Scripts/combat_ui.gd" id="12_qoh2p"]
 [ext_resource type="AudioStream" uid="uid://jeea6hkp0vvs" path="res://sword-clash-241729.mp3" id="13_gs42a"]
-[ext_resource type="Texture2D" uid="uid://cgfk2api3ill2" path="res://Assets/parry 2-8ca9.png" id="15_6tpbs"]
+[ext_resource type="Texture2D" uid="uid://cgfk2api3ill2" path="res://Assets/Character/parry 2-8ca9.png" id="15_6tpbs"]
 [ext_resource type="Script" uid="uid://d0wacehomd2p6" path="res://Escenas/Character_input_handler.gd" id="15_8dcy0"]
-[ext_resource type="Texture2D" uid="uid://ddilthrroil1l" path="res://Assets/run-344d.png" id="15_bj1in"]
-[ext_resource type="Texture2D" uid="uid://5u85lhjkhykp" path="res://Assets/walk-33e8.png" id="16_6tpbs"]
+[ext_resource type="Texture2D" uid="uid://ddilthrroil1l" path="res://Assets/Character/run-344d.png" id="15_bj1in"]
+[ext_resource type="Texture2D" uid="uid://5u85lhjkhykp" path="res://Assets/Character/walk-33e8.png" id="16_6tpbs"]
 [ext_resource type="Script" uid="uid://dwhyjerw6dhbe" path="res://Scripts/Moveset.gd" id="16_7pm4f"]
 [ext_resource type="PackedScene" uid="uid://b4mlkpqqyv03f" path="res://Escenas/Projectile.tscn" id="16_gl37d"]
-[ext_resource type="Texture2D" uid="uid://cxbn1tds20d1d" path="res://Assets/fall-8840.png" id="17_6tpbs"]
-[ext_resource type="Texture2D" uid="uid://dhb4or11rsmo2" path="res://Assets/sweep-0dfd.png" id="17_fo5vo"]
-[ext_resource type="Texture2D" uid="uid://b1gp1mwmbj4ia" path="res://Assets/kick-0dff.png" id="18_ifsf6"]
-[ext_resource type="Texture2D" uid="uid://4cbiagk47anj" path="res://Assets/punch-0e01.png" id="19_8yb4h"]
+[ext_resource type="Texture2D" uid="uid://cxbn1tds20d1d" path="res://Assets/Character/fall-8840.png" id="17_6tpbs"]
+[ext_resource type="Texture2D" uid="uid://dhb4or11rsmo2" path="res://Assets/Character/sweep-0dfd.png" id="17_fo5vo"]
+[ext_resource type="Texture2D" uid="uid://b1gp1mwmbj4ia" path="res://Assets/Character/kick-0dff.png" id="18_ifsf6"]
+[ext_resource type="Texture2D" uid="uid://4cbiagk47anj" path="res://Assets/Character/punch-0e01.png" id="19_8yb4h"]
 [ext_resource type="Script" uid="uid://v4e05x5c7afs" path="res://components/health_component.gd" id="20_1bmxy"]
 [ext_resource type="Script" uid="uid://cs4dmoqcf6dg1" path="res://components/hurtbox.gd" id="21_pv6b1"]
 
@@ -33,7 +33,7 @@ size = Vector2(33.5, 50.5)
 size = Vector2(34.7175, 53.2531)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3tm5s"]
-size = Vector2(38.875, 3)
+size = Vector2(185.438, 3)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gjle3"]
 radius = 9.0
@@ -808,71 +808,6 @@ tracks/4/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_2tlv4"]
-resource_name = "sweep"
-length = 0.6
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Pivote/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("17_fo5vo")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Pivote/Sprite2D:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(20, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Pivote/Sprite2D:hframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [6]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Pivote/Sprite2D:vframes")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Pivote/Sprite2D:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
 [sub_resource type="Animation" id="Animation_nok5b"]
 resource_name = "kick"
 length = 0.8
@@ -1001,6 +936,71 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_2tlv4"]
+resource_name = "sweep"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivote/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("17_fo5vo")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivote/Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivote/Sprite2D:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivote/Sprite2D:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivote/Sprite2D:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6tpbs"]
@@ -1234,6 +1234,7 @@ bg_color = Color(0.14902, 0.705882, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
+scale = Vector2(0.9, 0.9)
 collision_mask = 5
 script = ExtResource("1_83e7o")
 
@@ -1264,11 +1265,11 @@ position = Vector2(48, 7)
 shape = SubResource("RectangleShape2D_f3cnb")
 
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
-position = Vector2(18, 0)
+position = Vector2(-54, -1)
 script = ExtResource("11_3tm5s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/EnemyTrigger"]
-position = Vector2(12, -34)
+position = Vector2(53, -35)
 shape = SubResource("RectangleShape2D_3tm5s")
 
 [node name="RayCast2D" type="RayCast2D" parent="Pivote"]
@@ -1278,26 +1279,11 @@ rotation = -1.5708
 [node name="PromptUI" type="Node2D" parent="."]
 script = ExtResource("12_qoh2p")
 
-[node name="PromptLabel" type="Label" parent="PromptUI"]
-z_index = 2
-texture_filter = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -22.0
-offset_top = -94.0
-offset_right = 5.328
-offset_bottom = -71.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_alignment = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="PromptUI"]
-offset_left = -22.0
-offset_top = -111.0
-offset_right = 18.0
-offset_bottom = -71.0
-bbcode_enabled = true
+[node name="KeyImage" type="TextureRect" parent="PromptUI"]
+offset_left = -21.1111
+offset_top = -126.667
+offset_right = 18.8889
+offset_bottom = -86.6667
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, -33)
@@ -1341,28 +1327,26 @@ metadata/_custom_type_script = "uid://cs4dmoqcf6dg1"
 position = Vector2(-3, -36)
 shape = SubResource("CapsuleShape2D_bj1in")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="AttackCooldownTimer" type="Timer" parent="."]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
-offset_left = 2.0
-offset_top = -2.0
-offset_right = 332.0
-offset_bottom = 65.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = -68.8889
+offset_top = -3.33333
+offset_right = 71.1111
+offset_bottom = 59.6667
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HealthBar" type="ProgressBar" parent="CanvasLayer2/MarginContainer"]
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_bj1in")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6tpbs")
-
-[node name="AttackCooldownTimer" type="Timer" parent="."]
+show_percentage = false
 
 [connection signal="area_entered" from="Pivote/Sprite2D/BlockArea" to="Pivote/Sprite2D/BlockArea" method="_on_area_entered"]
 [connection signal="area_exited" from="Pivote/Sprite2D/BlockArea" to="Pivote/Sprite2D/BlockArea" method="_on_area_exited"]
-[connection signal="body_entered" from="Pivote/EnemyTrigger" to="Pivote/EnemyTrigger" method="_on_body_entered"]
 [connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]

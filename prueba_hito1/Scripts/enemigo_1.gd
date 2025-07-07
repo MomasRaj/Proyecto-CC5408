@@ -16,12 +16,12 @@ var state = State.IDLE
 @onready var parry_notify_area: Area2D = $Pivote/ParryNotifyArea
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@export var max_detection_range:= 500.0
+@export var max_detection_range := 500.0
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var Hitbox_damage: Hitbox = $Pivote/Attack_area
 
-# Variables movimiento y combate
+# Variables de movimiento y combate
 var WALK_SPEED = 20
 var GRAVITY = 900.0
 var knockback_strength = 100
@@ -32,8 +32,7 @@ var is_attacking := false
 var can_get_hit := false
 var knockback := false
 var is_in_combat := false
-# Variable para evitar llamar playback.travel innecesariamente
-var current_animation = ""
+var current_attack_anim = ""
 
 func _ready():
 	add_to_group("enemies")
@@ -54,8 +53,7 @@ func _physics_process(delta):
 	var distance = to_player.length()
 	if distance <= max_detection_range and state == State.IDLE:
 		state = State.MOVING
-	
-	# Aplicar gravedad
+
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 	else:
@@ -68,16 +66,12 @@ func _physics_process(delta):
 			handle_moving()
 		State.ATTACKING:
 			pass
-		State.HURT:
-			handle_knockback()
-		State.KNOCKBACK:
+		State.HURT, State.KNOCKBACK:
 			handle_knockback()
 		State.DEAD:
 			pass
 
 	move_and_slide()
-
-	# Actualizar animaciones y dirección
 	_update_animation()
 	_update_direction()
 
@@ -85,7 +79,7 @@ func handle_idle():
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
 	if distance > max_detection_range:
-		velocity.x=0
+		velocity.x = 0
 		return
 	if distance > min_distance_to_player:
 		state = State.MOVING
@@ -97,10 +91,10 @@ func handle_moving():
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
 	if distance > max_detection_range:
-		state=State.IDLE
-		velocity.x=0
+		state = State.IDLE
+		velocity.x = 0
 		return
-	
+
 	if distance <= min_distance_to_player:
 		state = State.IDLE
 		velocity.x = 0
@@ -110,7 +104,6 @@ func handle_moving():
 func handle_knockback():
 	if knockback:
 		move_and_slide()
-		return
 
 func _update_animation():
 	var new_animation = ""
@@ -118,17 +111,17 @@ func _update_animation():
 	if dead:
 		new_animation = "Enemy_muerte"
 	elif state == State.ATTACKING:
-		new_animation = current_animation
-	elif state == State.HURT or state == State.KNOCKBACK:
+		new_animation = current_attack_anim
+	elif state in [State.HURT, State.KNOCKBACK]:
 		new_animation = "Enemy_hurt"
 	elif abs(velocity.x) > 0.1:
 		new_animation = "Enemy_walk"
 	else:
 		new_animation = "Enemy_Idle"
 
-	if current_animation != new_animation:
+	if current_attack_anim != new_animation:
 		playback.travel(new_animation)
-		current_animation = new_animation
+		current_attack_anim = new_animation
 
 func _update_direction():
 	var to_player = player.global_position - global_position
@@ -142,7 +135,7 @@ func attack():
 	state = State.ATTACKING
 	var k = randi_range(1, 3)
 	var ataque = "Enemy_attack" + str(k)
-	current_animation = ataque
+	current_attack_anim = ataque
 	playback.travel(ataque)
 	var duration = animation_tree.get_animation(ataque).length
 	await get_tree().create_timer(duration).timeout
@@ -154,12 +147,12 @@ func take_damage():
 		state = State.HURT
 		playback.travel("Enemy_hurt")
 		await get_tree().create_timer(1).timeout
-		if dead:
-			return
-		state = State.IDLE
+		if not dead:
+			state = State.IDLE
 
 func recibir_damage(damage: float) -> void:
 	if can_get_hit:
+		can_get_hit = false
 		knockback = true
 		health_component.take_damage_v2(damage)
 		var knockback_dir = (global_position - player.position).normalized()
@@ -174,10 +167,11 @@ func recibir_damage(damage: float) -> void:
 			state = State.IDLE
 	else:
 		state = State.IDLE
+		print("CANT GET HIT")
 		playback.travel("Enemy_parry")
 		audio_stream_player_2d.play()
 		await animation_tree.animation_finished
-		state= State.IDLE
+		state = State.IDLE
 
 func death() -> void:
 	if dead:
@@ -199,21 +193,21 @@ func death() -> void:
 	await tween.finished
 	queue_free()
 
-func _on_combat_ended(succes: bool):
-	if succes:
+func _on_combat_ended(success: bool,source_enemy):
+	if source_enemy != self:
+		return
+	if success:
 		print("Puedes dañar al enemigo")
 	else:
 		print("El jugador falló")
 
-func _on_notify_parry(body: Node):
-	var player_ = body as Player
-	if player_ and not self in combat_manager.enemy_list:
-		combat_manager.enemy_list.append(self)
+func _on_notify_parry(_body: Node):
+	# Ya no agregamos a combat_manager.enemy_list aquí
+	pass
 
-func _on_notify_parry_end(body: Node):
-	var player_ = body as Player
-	if player_:
-		combat_manager.enemy_list.erase(self)
+func _on_notify_parry_end(_body: Node):
+	# Ya no quitamos de combat_manager.enemy_list aquí
+	pass
 
 func _on_health_changed(value: float) -> void:
 	health_bar.value = value

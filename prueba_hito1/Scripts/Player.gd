@@ -31,6 +31,7 @@ var salto = 0
 # Airdash
 var AIRDASH_SPEED = 550
 var air_dash = 1
+var is_air_dashing: bool = false
 # Direccion dash
 var last_direction = 0
 # Velocidad aire
@@ -70,7 +71,7 @@ func _on_combat_started():
 	is_in_combat=true
 	is_blocking=false
 
-func _on_combat_ended(success: bool):
+func _on_combat_ended(_success: bool,_enemy):
 	is_in_combat = false
 	is_blocking = false
 
@@ -139,23 +140,33 @@ func handle_air_movement(delta):
 		last_direction = direction
 		pivote.scale.x = sign(direction)
 
+	# Dash en el aire
+	if Input.is_action_just_pressed("entry_run") and air_dash < 2:
+		AIR_VELOCITY = last_direction * AIRDASH_SPEED
+		is_air_dashing = true
+		air_dash += 1
+
+	# Si está haciendo air dash, conservar velocidad y aplicar resistencia
+	if is_air_dashing:
+		AIR_VELOCITY -= AIR_RESISTANCE * delta * sign(AIR_VELOCITY)
+		if abs(AIR_VELOCITY) < 10:
+			AIR_VELOCITY = 0
+			is_air_dashing = false
+		velocity.x = AIR_VELOCITY
+	else:
+		# Movimiento horizontal normal en el aire
+		MAX_SPEED = RUN_SPEED if Input.is_action_pressed("entry_run") else WALK_SPEED
+		velocity.x = direction * MAX_SPEED
+
+	# Doble salto
 	if salto < 3 and Input.is_action_just_pressed("entry_jump"):
 		velocity.y = JUMP_VELOCITY
 		salto += 1
 
-	if Input.is_action_just_pressed("entry_run") and air_dash < 2:
-		AIR_VELOCITY = last_direction * AIRDASH_SPEED
-		velocity.x = AIR_VELOCITY
-		air_dash += 1
-
-	if air_dash == 2:
-		AIR_VELOCITY -= delta * AIR_RESISTANCE * last_direction * 3
-		if abs(AIR_VELOCITY) < 10:
-			AIR_VELOCITY = 0
-		velocity.x = AIR_VELOCITY
-
+	# Gravedad
 	velocity.y += GRAVITY * delta
 
+	# Animación
 	if velocity.y < 0:
 		playback.travel("Jump")
 	else:
@@ -163,10 +174,13 @@ func handle_air_movement(delta):
 
 	move_and_slide()
 
+	# Reinicio de estado al tocar el piso
 	if is_on_floor():
 		state = State.IDLE
 		salto = 1
 		air_dash = 1
+		is_air_dashing = false
+
 
 func _on_AnimationTree_animation_finished(anim_name):
 	if anim_name == "Attack1" and state == State.ATTACKING:

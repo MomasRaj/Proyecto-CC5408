@@ -1,22 +1,30 @@
 class_name Hurtbox
 extends Area2D
-signal  damage_attempted(from_position: Vector2, damage: float)
+
+signal damage_attempted(from_position: Vector2, damage: float)
+
 @export var health_component: HealthComponent
-@onready var combat_manager = get_node("/root/MainEscene/CombatManager")
+@onready var combat_manager: Node = null
+
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 
+	if owner is Player:
+		combat_manager = get_node("/root/MainEscene/CombatManager")
+
 func _on_area_entered(area: Area2D) -> void:
-	var hitbox = area as Hitbox
-	if hitbox:
-		# Si el owner es el jugador, no aplicamos daño directamente
-		if owner is Player:
-			await get_tree().create_timer(0.3).timeout
-			# Solo emitir la señal, CombatManager se encarga del daño
+	var hitbox := area as Hitbox
+	if hitbox == null:
+		return
+
+	if owner is Player:
+		# Esperar antes de emitir el intento de daño para permitir parry
+		await get_tree().create_timer(0.3).timeout
+		if combat_manager and combat_manager.in_combat:
+			# No se aplica daño directamente, solo se emite el intento
 			damage_attempted.emit(hitbox.global_position, hitbox.damage)
-			hitbox.damage_dealt.emit()
-		# Si es enemigo, sí aplicamos daño directamente
-		elif owner.has_method("recibir_damage"):
-			owner.recibir_damage(hitbox.damage)
-			owner.can_get_hit=false
-			hitbox.damage_dealt.emit()
+		hitbox.damage_dealt.emit()
+
+	elif owner.has_method("recibir_damage"):
+		owner.recibir_damage(hitbox.damage)
+		hitbox.damage_dealt.emit()
