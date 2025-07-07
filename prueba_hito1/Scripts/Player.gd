@@ -50,6 +50,8 @@ var AIR_RESISTANCE = 200
 @onready var pivote: Node2D = $Pivote
 @onready var combat_manager: Node = $"../CombatManager"
 @onready var block_area: Area2D = $Pivote/Sprite2D/BlockArea
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 # referencias a la salud
 @onready var health_bar: ProgressBar = %HealthBar
@@ -236,3 +238,15 @@ func _on_health_changed(value: float) -> void:
 
 func _on_attack_cooldown_timer_timeout() -> void:
 	can_attack = true
+
+func play_special_move(anim_name: String):
+	if dead or is_hurt:
+		return
+	state = State.ATTACKING
+	velocity = Vector2.ZERO
+	playback.travel(anim_name)
+	if animation_player.has_animation(anim_name):
+		var duration = animation_player.get_animation(anim_name).length
+		await get_tree().create_timer(duration).timeout
+	state = State.IDLE
+	

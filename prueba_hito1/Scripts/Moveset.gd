@@ -8,7 +8,12 @@ var Moves : Dictionary = {
 	["L"] : "entry_left",
 	["A"] : "entry_attack",
 	["I"] : "Idle",
+	["K"] : "entry_kick",
+	["P"] : "entry_punch",
 }
 var Specials : Dictionary = {
-	["D", "R", "A"]: "Proyectile" 
+	["D", "R", "A"]: "Proyectile",
+	["K"]: "kick",
+	["A"]: "Attack1",
+	["P"]: "punch",
 }
