@@ -1359,7 +1359,6 @@ shape = SubResource("RectangleShape2D_f3cnb")
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
 position = Vector2(-54, -1)
 script = ExtResource("11_3tm5s")
-MAX_COMBAT_DISTANCE = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/EnemyTrigger"]
 position = Vector2(53, -35)
