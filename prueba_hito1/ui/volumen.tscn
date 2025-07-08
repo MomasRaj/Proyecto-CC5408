@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cea837af4dndf"]
+[gd_scene load_steps=3 format=3 uid="uid://cea837af4dndf"]
 
 [ext_resource type="Script" uid="uid://bgkqe6cxwkp12" path="res://ui/volumen.gd" id="1_ajiqo"]
+[ext_resource type="Script" uid="uid://33egj6jr8bxk" path="res://ui/h_slider.gd" id="2_g410a"]
 
 [node name="Control" type="MarginContainer"]
 anchors_preset = 15
@@ -38,3 +39,5 @@ text = "Volumen"
 
 [node name="HSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+script = ExtResource("2_g410a")
+bus_name = "Master"
