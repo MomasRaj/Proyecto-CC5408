@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bhy17t8ykfree"]
+[gd_scene load_steps=24 format=4 uid="uid://bhy17t8ykfree"]
 
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ig2kn"]
 [ext_resource type="Texture2D" uid="uid://epcaq6yaqyka" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/background/background_layer_1.png" id="7_u12ih"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c33cyx71qppws" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/oak_woods_tileset.png" id="10_i2xo1"]
 [ext_resource type="Script" uid="uid://b4xa25fqkvjed" path="res://Scripts/game_manager.gd" id="11_8fxbh"]
 [ext_resource type="Script" uid="uid://bv07xn5i7d0fu" path="res://Scripts/combat_manager.gd" id="11_u12ih"]
+[ext_resource type="PackedScene" uid="uid://cea837af4dndf" path="res://ui/volumen.tscn" id="12_2e8qy"]
 [ext_resource type="Script" uid="uid://cd4fqq7l2ef47" path="res://Scripts/ui.gd" id="12_u12ih"]
 [ext_resource type="PackedScene" uid="uid://cdvaggr452s2t" path="res://Escenas/Enemigo1.tscn" id="13_ig2kn"]
 [ext_resource type="AudioStream" uid="uid://jeea6hkp0vvs" path="res://sword-clash-241729.mp3" id="13_t36bp"]
@@ -540,6 +541,14 @@ volume_db = -3.748
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Control" parent="CanvasLayer" instance=ExtResource("12_2e8qy")]
+process_mode = 3
+visible = false
+offset_left = -143.0
+offset_top = -13.0
+offset_right = 110.0
+offset_bottom = -8.0
+
 [node name="Main menu" parent="CanvasLayer" instance=ExtResource("14_t36bp")]
 visible = false
 
@@ -571,3 +580,5 @@ texture = ExtResource("15_dc6jj")
 
 [node name="CombatManager" type="Node" parent="."]
 script = ExtResource("11_u12ih")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
