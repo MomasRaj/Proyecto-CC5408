@@ -482,6 +482,7 @@ position = Vector2(-204, 145)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(215, -144)
+offset = Vector2(0, -30)
 
 [node name="Enemy1" parent="." instance=ExtResource("13_ig2kn")]
 z_index = 1

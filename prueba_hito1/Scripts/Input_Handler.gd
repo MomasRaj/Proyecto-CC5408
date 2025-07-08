@@ -18,6 +18,8 @@ var _moveSetDictionary : Dictionary
 var _isAttacking : bool = false
 var _isCrouching : bool = false
 var _isJumping : bool = false
+var _isRotated : bool = false
+
 
 func _ready() -> void:
 	if move_data:
@@ -52,6 +54,10 @@ func TranslateInput() -> void:
 	_elapsedWaitTime = 0
 	if key=="U":
 		pass
+	elif key=="L":
+		_registeredKeyInputs.append("R")
+		_isRotated=true
+		
 	else:
 		_registeredKeyInputs.append(key)
 
@@ -94,6 +100,7 @@ func PlaySpecialMove(move_name: String) -> void:
 		ShootProjectile()
 		
 	await get_tree().create_timer(0.1).timeout
+	_isRotated = false
 	_isAttacking = false
 	
 	
@@ -104,4 +111,7 @@ func ShootProjectile() -> void:
 		spawn_position.y -= 50
 		projectile.position = spawn_position
 		projectile.direction = Vector2.RIGHT 
+		if _isRotated:
+			projectile.direction = Vector2.LEFT
+		
 		get_tree().current_scene.add_child(projectile)
