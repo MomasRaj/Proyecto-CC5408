@@ -1359,6 +1359,7 @@ shape = SubResource("RectangleShape2D_f3cnb")
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
 position = Vector2(-54, -1)
 script = ExtResource("11_3tm5s")
+MAX_COMBAT_DISTANCE = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/EnemyTrigger"]
 position = Vector2(53, -35)
@@ -1395,7 +1396,7 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_gs42a")
-volume_db = 0.861
+volume_db = -8.0
 area_mask = 7
 
 [node name="GeneralInputHandler" type="Node" parent="." node_paths=PackedStringArray("move_data", "player")]

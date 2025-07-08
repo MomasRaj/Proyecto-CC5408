@@ -1,6 +1,5 @@
 extends CharacterBody2D
 class_name Enemy
-
 signal enemy_died
 
 # Estados
@@ -19,7 +18,7 @@ var state = State.IDLE
 @export var max_detection_range := 500.0
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var Hitbox_damage: Hitbox = $Pivote/Attack_area
+
 
 # Variables de movimiento y combate
 var WALK_SPEED = 20
@@ -168,9 +167,10 @@ func recibir_damage(damage: float) -> void:
 	else:
 		state = State.IDLE
 		print("CANT GET HIT")
-		playback.travel("Enemy_parry")
-		audio_stream_player_2d.play()
-		await animation_tree.animation_finished
+		if $AnimationPlayer.has_animation("Enemy_parry"):
+			playback.travel("Enemy_parry")
+			audio_stream_player_2d.play()
+			await animation_tree.animation_finished
 		state = State.IDLE
 
 func death() -> void:
