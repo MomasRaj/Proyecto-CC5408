@@ -12,7 +12,7 @@ func _ready() -> void:
 	retry.pressed.connect(_on_retry_pressed)
 	main_menu.pressed.connect(_on_main_menu_pressed)
 	resume.pressed.connect(_on_resume_pressed)
-	#sound.pressed.connect(_on_sound_pressed)
+	sound.pressed.connect(_on_sound_pressed) 
 	hide()
 
 func _input(event: InputEvent) -> void:
@@ -36,4 +36,3 @@ func _on_retry_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://ui/Titulo.tscn")
-	
