@@ -22,6 +22,7 @@ var state = State.IDLE
 
 # Variables de movimiento y combate
 @export var WALK_SPEED = 20
+@export var t=true
 var GRAVITY = 900.0
 var knockback_strength = 100
 var min_distance_to_player = 50
@@ -57,6 +58,7 @@ func _physics_process(delta):
 		velocity.y += GRAVITY * delta
 	else:
 		velocity.y = 0
+
 
 	match state:
 		State.IDLE:
