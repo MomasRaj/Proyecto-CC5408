@@ -729,6 +729,7 @@ max_health = 200.0
 metadata/_custom_type_script = "uid://v4e05x5c7afs"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
