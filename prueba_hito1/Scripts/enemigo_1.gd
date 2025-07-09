@@ -80,7 +80,7 @@ func handle_idle():
 	if distance > max_detection_range:
 		velocity.x = 0
 		return
-	if distance > min_distance_to_player:
+	if distance <= min_distance_to_player and state==State.ATTACKING:
 		state = State.MOVING
 		velocity.x = sign(to_player.x) * WALK_SPEED
 	else:
@@ -90,22 +90,19 @@ func update_state_after_action():
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
 
-	if distance <= max_detection_range and distance > min_distance_to_player:
-		state = State.MOVING
+	if distance <= max_detection_range:
+			state = State.MOVING
 	else:
 		state = State.IDLE
 	
 func handle_moving():
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
-	if distance > max_detection_range:
+	if distance > max_detection_range or distance <=min_distance_to_player:
 		state = State.IDLE
 		velocity.x = 0
 		return
 
-	if distance <= min_distance_to_player:
-		state = State.IDLE
-		velocity.x = 0
 	else:
 		velocity.x = sign(to_player.x) * WALK_SPEED
 

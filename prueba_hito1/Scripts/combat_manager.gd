@@ -56,6 +56,7 @@ func end_combat(success: bool, enemy: Enemy):
 
 	if not success:
 		player.get_node("HealthComponent").take_damage_v2(10.0)
+		enemy.state = enemy.State.MOVING
 
 	emit_signal("combat_ended", success, enemy)
 	

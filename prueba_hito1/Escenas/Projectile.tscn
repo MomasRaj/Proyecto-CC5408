@@ -31,6 +31,7 @@ shape = SubResource("RectangleShape2D_e7peq")
 collision_layer = 2
 collision_mask = 2
 script = SubResource("GDScript_crbyo")
+damage = 30
 metadata/_custom_type_script = "uid://mev8d5dvq02k"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
