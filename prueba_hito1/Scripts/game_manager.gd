@@ -36,6 +36,8 @@ func _show_victory():
 	if get_tree().current_scene.scene_file_path == "res://Escenas/Main2.tscn":
 		game_ended = true
 		ui.show_message("¡VICTORIA!", true)
+		await get_tree().create_timer(3).timeout
+		get_tree().change_scene_to_file("res://ui/credits.tscn")
 	else:	
 		await get_tree().create_timer(0.5).timeout
 		get_tree().change_scene_to_file("res://Escenas/Main2.tscn")
