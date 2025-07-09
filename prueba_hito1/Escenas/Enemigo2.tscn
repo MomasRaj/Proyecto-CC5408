@@ -1,8 +1,9 @@
-[gd_scene load_steps=80 format=3 uid="uid://budxnxxoukwwc"]
+[gd_scene load_steps=81 format=3 uid="uid://budxnxxoukwwc"]
 
 [ext_resource type="Script" uid="uid://cdcc723fwfptv" path="res://Scripts/enemigo_2.gd" id="1_nffar"]
 [ext_resource type="Texture2D" uid="uid://ckw0h82o3ugym" path="res://Assets/free-werewolf-sprite-sheets-pixel-art/Red_Werewolf/Idle.png" id="2_x5e7e"]
 [ext_resource type="Script" uid="uid://mev8d5dvq02k" path="res://components/hitbox.gd" id="3_nh01l"]
+[ext_resource type="Script" uid="uid://4ncbtl5nex6t" path="res://Scripts/enemy_trigger.gd" id="4_1667q"]
 [ext_resource type="Texture2D" uid="uid://ca5vkt1g3kfln" path="res://Assets/free-werewolf-sprite-sheets-pixel-art/Red_Werewolf/Attack_1.png" id="4_o5fq3"]
 [ext_resource type="Texture2D" uid="uid://dwi6jwf0dgk3x" path="res://Assets/free-werewolf-sprite-sheets-pixel-art/Red_Werewolf/Attack_2.png" id="5_jxdoq"]
 [ext_resource type="Script" uid="uid://cs4dmoqcf6dg1" path="res://components/hurtbox.gd" id="5_ygg6c"]
@@ -272,59 +273,6 @@ tracks/4/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_cc7xr"]
-resource_name = "Enemy_dead"
-length = 0.2
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Pivote/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("7_nh01l")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Pivote/Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Pivote/Sprite2D:vframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Pivote/Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
 [sub_resource type="Animation" id="Animation_nv0ly"]
 resource_name = "Enemy_hurt"
 length = 0.6
@@ -376,6 +324,59 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_cc7xr"]
+resource_name = "Enemy_muerte"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivote/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_nh01l")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivote/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivote/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivote/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_hfpl8"]
@@ -501,8 +502,8 @@ _data = {
 &"Enemy_attack1": SubResource("Animation_8km1k"),
 &"Enemy_attack2": SubResource("Animation_kp2b4"),
 &"Enemy_attack3": SubResource("Animation_mafie"),
-&"Enemy_dead": SubResource("Animation_cc7xr"),
 &"Enemy_hurt": SubResource("Animation_nv0ly"),
+&"Enemy_muerte": SubResource("Animation_cc7xr"),
 &"Enemy_walk": SubResource("Animation_hfpl8"),
 &"RESET": SubResource("Animation_2k1vx")
 }
@@ -676,6 +677,7 @@ texture_filter = 1
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_nffar")
 WALK_SPEED = 50
+min_distance_to_player = 90
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -39)
@@ -698,6 +700,8 @@ shape = SubResource("RectangleShape2D_4nkaj")
 disabled = true
 
 [node name="ParryNotifyArea" type="Area2D" parent="Pivote"]
+position = Vector2(0.666667, 0)
+script = ExtResource("4_1667q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/ParryNotifyArea"]
 position = Vector2(40, -39)
@@ -724,8 +728,6 @@ shape = SubResource("CapsuleShape2D_cc7xr")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("11_4nkaj")
-health = 200.0
-max_health = 200.0
 metadata/_custom_type_script = "uid://v4e05x5c7afs"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -749,6 +751,7 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_4nkaj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_nh01l")
+max_value = 200.0
 show_percentage = false
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -18,14 +18,14 @@ var state = State.IDLE
 @export var max_detection_range := 500.0
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var parry_notify: CollisionShape2D = $Pivote/ParryNotifyArea/CollisionShape2D
 
 
 # Variables de movimiento y combate
-@export var WALK_SPEED = 20
-@export var t=true
+@export var WALK_SPEED = 40
 var GRAVITY = 900.0
 var knockback_strength = 100
-var min_distance_to_player = 50
+@export var min_distance_to_player = 50
 var dead: bool = false
 var can_attack := true
 var is_attacking := false
@@ -48,7 +48,7 @@ func _ready():
 func _physics_process(delta):
 	if dead:
 		return
-
+	
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
 	if distance <= max_detection_range and state == State.IDLE:
@@ -58,7 +58,6 @@ func _physics_process(delta):
 		velocity.y += GRAVITY * delta
 	else:
 		velocity.y = 0
-
 
 	match state:
 		State.IDLE:
@@ -87,7 +86,16 @@ func handle_idle():
 		velocity.x = sign(to_player.x) * WALK_SPEED
 	else:
 		velocity.x = 0
+		
+func update_state_after_action():
+	var to_player = player.global_position - global_position
+	var distance = to_player.length()
 
+	if distance <= max_detection_range and distance > min_distance_to_player:
+		state = State.MOVING
+	else:
+		state = State.IDLE
+	
 func handle_moving():
 	var to_player = player.global_position - global_position
 	var distance = to_player.length()
@@ -141,7 +149,7 @@ func attack():
 	var duration = animation_tree.get_animation(ataque).length
 	await get_tree().create_timer(duration).timeout
 	is_attacking = false
-	state = State.IDLE
+	update_state_after_action()
 
 func take_damage():
 	if can_get_hit and not dead:
@@ -149,6 +157,8 @@ func take_damage():
 		playback.travel("Enemy_hurt")
 		await get_tree().create_timer(1).timeout
 		if not dead:
+			parry_notify.disabled=true
+			parry_notify.disabled=false
 			state = State.IDLE
 
 func recibir_damage(damage: float) -> void:

@@ -3339,11 +3339,16 @@ position = Vector2(-552, 195)
 position = Vector2(215, -144)
 offset = Vector2(0, -30)
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player/Camera2D"]
+position = Vector2(398.333, -72.6667)
+scale = Vector2(1.11111, 1.11111)
+stream = ExtResource("11_8mjb4")
+volume_db = -8.0
+
 [node name="Enemigo2" parent="." instance=ExtResource("4_r3ixq")]
 z_index = 1
 position = Vector2(803, 212)
-WALK_SPEED = 400
-t = false
+WALK_SPEED = 120
 
 [node name="MapLayers" type="Node" parent="."]
 
@@ -3387,10 +3392,6 @@ tile_set = SubResource("TileSet_5tebq")
 [node name="TileMapLayer3" type="TileMapLayer" parent="MapLayers"]
 tile_map_data = PackedByteArray("AAAQAAcAEAAAAAAAAAAkAAcAEAAAAAAAAAD8/wcAEAAAAAAAAAAAAAgAEQAAAAAAAAAhAAgAEwAAAAAAAAAXAAgAEwAAAAAAAAAKAAgAEgAAAAAAAADV/wgAEgAAAAAAAADg/wgAEgAAAAAAAAA8AAUAEgAAAAAAAAATAAgAFgAAAAAAAAAMAAgAFgAAAAAAAAAGAAgAFQAAAAAAAADp/wgAFQAAAAAAAADl/wgAFQAAAAAAAADi/wgAFAAAAAAAAAApAAgAFAAAAAAAAAAeAAgAFAAAAAAAAAAxAAgAFAAAAAAAAAAtAAgAFAAAAAAAAADy/wgAEwAAAAAAAAD1/wgAFAAAAAAAAABWAPH/EAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mh7bm")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_8mjb4")
-volume_db = -8.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

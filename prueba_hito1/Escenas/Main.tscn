@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://bhy17t8ykfree"]
+[gd_scene load_steps=44 format=4 uid="uid://bhy17t8ykfree"]
 
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ig2kn"]
 [ext_resource type="Texture2D" uid="uid://epcaq6yaqyka" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/background/background_layer_1.png" id="7_u12ih"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://lblikc5x4sx7" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/sign.png" id="15_dc6jj"]
 [ext_resource type="Texture2D" uid="uid://emq5chbmxgko" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/grass_2.png" id="16_vtjv0"]
 [ext_resource type="Texture2D" uid="uid://c5nuo5sag0jnw" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/grass_3.png" id="17_jcopu"]
+[ext_resource type="PackedScene" uid="uid://budxnxxoukwwc" path="res://Escenas/Enemigo2.tscn" id="25_xipdu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2e8qy"]
 texture = ExtResource("7_u12ih")
@@ -1524,14 +1525,6 @@ sources/22 = SubResource("TileSetAtlasSource_f2tja")
 [node name="MainEscene" type="Node2D"]
 script = ExtResource("1_ig2kn")
 
-[node name="Player" parent="." instance=ExtResource("9_dc6jj")]
-z_index = 1
-position = Vector2(-969, 214)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(215, -144)
-offset = Vector2(0, -30)
-
 [node name="Enemy1" parent="." instance=ExtResource("13_ig2kn")]
 z_index = 1
 position = Vector2(34, 70)
@@ -1543,6 +1536,20 @@ position = Vector2(758, 68)
 [node name="Enemy3" parent="." instance=ExtResource("13_ig2kn")]
 z_index = 1
 position = Vector2(1945, -332)
+
+[node name="Player" parent="." instance=ExtResource("9_dc6jj")]
+z_index = 1
+position = Vector2(-967, 195)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(215, -144)
+offset = Vector2(0, -30)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player/Camera2D"]
+position = Vector2(859.445, -72.6667)
+scale = Vector2(1.11111, 1.11111)
+stream = ExtResource("13_t36bp")
+volume_db = -8.0
 
 [node name="MapLayers" type="Node" parent="."]
 
@@ -1581,10 +1588,6 @@ tile_set = SubResource("TileSet_u12ih")
 tile_map_data = PackedByteArray("AAAYAAIADgAAAAAAAAAdAAIADgAAAAAAAAAiAAIADgAAAAAAAAAQAAcAEAAAAAAAAAAkAAcAEAAAAAAAAAD8/wcAEAAAAAAAAAAAAAgAEQAAAAAAAAAhAAgAEwAAAAAAAAAXAAgAEwAAAAAAAAAaAAIAEwAAAAAAAAAKAAgAEgAAAAAAAADV/wgAEgAAAAAAAADg/wgAEgAAAAAAAAA8AAUAEgAAAAAAAAATAAgAFgAAAAAAAAAMAAgAFgAAAAAAAAAGAAgAFQAAAAAAAADp/wgAFQAAAAAAAADl/wgAFQAAAAAAAADi/wgAFAAAAAAAAAApAAgAFAAAAAAAAAAeAAgAFAAAAAAAAAAxAAgAFAAAAAAAAAAtAAgAFAAAAAAAAAD+/wIADgAAAAAAAAACAAIADgAAAAAAAAAHAAIADgAAAAAAAADy/wgAEwAAAAAAAAD1/wgAFAAAAAAAAABWAPH/EAAAAAAAAAAFAAIAEwAAAAAAAAA=")
 tile_set = SubResource("TileSet_a8nka")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_t36bp")
-volume_db = -8.0
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("12_dc6jj")]
@@ -1622,3 +1625,7 @@ texture = ExtResource("15_dc6jj")
 
 [node name="CombatManager" type="Node" parent="."]
 script = ExtResource("11_u12ih")
+
+[node name="Enemigo2" parent="." instance=ExtResource("25_xipdu")]
+z_index = 1
+position = Vector2(-566, 209)

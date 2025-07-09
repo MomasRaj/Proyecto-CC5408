@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3 uid="uid://dul63mmxlpdc2"]
+[gd_scene load_steps=124 format=3 uid="uid://dul63mmxlpdc2"]
 
 [ext_resource type="Script" uid="uid://cecyegq5hlryp" path="res://Scripts/Player.gd" id="1_83e7o"]
 [ext_resource type="Script" uid="uid://mev8d5dvq02k" path="res://components/hitbox.gd" id="2_p50dg"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bq3b0dtbv83qb" path="res://Assets/Character/Attack2.png" id="8_ifsf6"]
 [ext_resource type="Texture2D" uid="uid://biwt4y081wffs" path="res://Assets/Character/hurt-35cb.png" id="10_bj1in"]
 [ext_resource type="Texture2D" uid="uid://dujoedr7yts3w" path="res://Assets/craftpix-net-123681-free-samurai-pixel-art-sprite-sheets/Samurai/Attack_3.png" id="10_t27sq"]
-[ext_resource type="Script" uid="uid://4ncbtl5nex6t" path="res://Scripts/enemy_trigger.gd" id="11_3tm5s"]
 [ext_resource type="Texture2D" uid="uid://bov7dnpk04pna" path="res://Assets/Character/idle.png" id="11_bj1in"]
 [ext_resource type="Texture2D" uid="uid://dymg3vhyvnc2j" path="res://Assets/Character/jump-8751.png" id="12_bj1in"]
 [ext_resource type="Script" uid="uid://bela4vse5n481" path="res://Scripts/combat_ui.gd" id="12_qoh2p"]
@@ -34,7 +33,7 @@ size = Vector2(33.5, 50.5)
 size = Vector2(34.7175, 53.2531)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3tm5s"]
-size = Vector2(185.438, 3)
+size = Vector2(88.8889, 3)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gjle3"]
 radius = 9.0
@@ -1358,10 +1357,9 @@ shape = SubResource("RectangleShape2D_f3cnb")
 
 [node name="EnemyTrigger" type="Area2D" parent="Pivote"]
 position = Vector2(-54, -1)
-script = ExtResource("11_3tm5s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivote/EnemyTrigger"]
-position = Vector2(53, -35)
+position = Vector2(59.5556, -35)
 shape = SubResource("RectangleShape2D_3tm5s")
 
 [node name="RayCast2D" type="RayCast2D" parent="Pivote"]
@@ -1375,7 +1373,7 @@ script = ExtResource("12_qoh2p")
 offset_left = -21.1111
 offset_top = -126.667
 offset_right = 18.8889
-offset_bottom = -86.6667
+offset_bottom = -86.6664
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, -33)
@@ -1429,6 +1427,7 @@ shape = SubResource("CapsuleShape2D_bj1in")
 [node name="AttackCooldownTimer" type="Timer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 1
 offset_left = -68.8889
 offset_top = -3.33333
 offset_right = 71.1111

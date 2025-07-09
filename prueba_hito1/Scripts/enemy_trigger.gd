@@ -3,14 +3,14 @@ extends Area2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $"../../AudioStreamPlayer2D"
 @onready var player: Player = get_node("/root/MainEscene/Player")
 @onready var combat_manager = get_node("/root/MainEscene/CombatManager")
+@onready var self_enemy: Enemy = owner as Enemy  # Asume que el dueño del Area2D es el enemigo
 
 var timer := Timer.new()
-var enemigos_en_contacto: Array = []
 
 @export var MAX_COMBAT_DISTANCE := 120.0
 
 func _ready() -> void:
-	timer.wait_time = 1.0
+	timer.wait_time = 0.5
 	timer.one_shot = true
 	timer.timeout.connect(_on_block_time_over)
 	add_child(timer)
@@ -19,21 +19,19 @@ func _ready() -> void:
 	connect("body_exited", Callable(self, "_on_body_exited"))
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is Enemy and not enemigos_en_contacto.has(body):
-		enemigos_en_contacto.append(body)
+	if body is Player:
 		if not timer.is_stopped():
 			timer.stop()
 		timer.start()
 
 func _on_body_exited(body: Node2D) -> void:
-	if body is Enemy:
-		enemigos_en_contacto.erase(body)
+	if body is Player:
+		timer.stop()  # Si el jugador sale antes del timeout, cancelar
 
 func _on_block_time_over() -> void:
-	# Filtrar enemigos que están vivos y cercanos al jugador
-	var enemigos_validos := enemigos_en_contacto.filter(func(e):
-		return not e.dead and player.global_position.distance_to(e.global_position) <= MAX_COMBAT_DISTANCE
-	)
+	if self_enemy.dead:
+		return
 
-	if enemigos_validos.size() > 0:
-		combat_manager.start_combat(enemigos_validos.duplicate())
+	# Comprobamos si el jugador sigue dentro del rango
+	if player.global_position.distance_to(self_enemy.global_position) <= MAX_COMBAT_DISTANCE:
+		combat_manager.start_combat(self_enemy)

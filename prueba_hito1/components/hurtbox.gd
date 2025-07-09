@@ -1,7 +1,8 @@
+# Hurtbox.gd
 class_name Hurtbox
 extends Area2D
 
-signal damage_attempted(from_position: Vector2, damage: float)
+signal damage_attempted(from_position: Vector2, damage: float, enemy: Enemy)
 
 @export var health_component: HealthComponent
 @onready var combat_manager: Node = null
@@ -21,8 +22,10 @@ func _on_area_entered(area: Area2D) -> void:
 		# Esperar antes de emitir el intento de daño para permitir parry
 		await get_tree().create_timer(0.3).timeout
 		if combat_manager and combat_manager.in_combat:
-			# No se aplica daño directamente, solo se emite el intento
-			damage_attempted.emit(hitbox.global_position, hitbox.damage)
+			var enemy := hitbox.owner as Enemy
+			if enemy == null:
+				return  # Si el owner no es Enemy, no seguimos
+			damage_attempted.emit(hitbox.global_position, hitbox.damage, enemy)
 		hitbox.damage_dealt.emit()
 
 	elif owner.has_method("recibir_damage"):

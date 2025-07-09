@@ -33,10 +33,12 @@ func _on_player_died():
 	_show_defeat()
 
 func _show_victory():
-	game_ended = true
-	ui.show_message("¡VICTORIA!", true)
-	await get_tree().create_timer(0.5).timeout
-	get_tree().change_scene_to_file("res://Escenas/Main2.tscn")
+	if get_tree().current_scene.scene_file_path == "res://Escenas/Main2.tscn":
+		game_ended = true
+		ui.show_message("¡VICTORIA!", true)
+	else:	
+		await get_tree().create_timer(0.5).timeout
+		get_tree().change_scene_to_file("res://Escenas/Main2.tscn")
 
 func _show_defeat():
 	game_ended = true

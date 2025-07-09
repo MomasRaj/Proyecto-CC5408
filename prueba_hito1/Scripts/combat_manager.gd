@@ -1,7 +1,7 @@
 extends Node
 
 # Referencias
-@onready var audio_stream_player_2d: AudioStreamPlayer2D = $"../AudioStreamPlayer2D"
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $"../Player/Camera2D/AudioStreamPlayer2D"
 @export var attack_interval := 1.0
 @export var sequence_lenght := 4
 @onready var player: Player = $"../Player"
@@ -22,32 +22,31 @@ func _ready():
 	block_area.parry_area_contact.connect(_on_parry_area_conect)
 	player.hurtbox.damage_attempted.connect(_on_player_damage_attempted)
 
-func start_combat(enemigos: Array):
+func start_combat(enemy: Enemy):
 	in_combat = true
 	combats.clear()
 	active_parry_targets.clear()
 
-	for enemy in enemigos:
-		if not enemy.dead:
-			enemy.can_get_hit = false
-			enemy.state = enemy.State.ATTACKING
+	if not enemy.dead:
+		enemy.can_get_hit = false
+		enemy.state = enemy.State.ATTACKING
 
-			var sequence := []
-			for i in range(sequence_lenght):
-				sequence.append(randi_range(1, 4))
+		var sequence := []
+		for i in range(sequence_lenght):
+			sequence.append(randi_range(1, 4))
 
-			combats[enemy] = {
-				"sequence": sequence,
-				"index": 0,
-				"input_received": false,
-				"parry_conect": false,
-				"failed": false
-			}
+		combats[enemy] = {
+			"sequence": sequence,
+			"index": 0,
+			"input_received": false,
+			"parry_conect": false,
+			"failed": false
+		}
 
 	emit_signal("combat_started")
 
-	for enemy in combats.keys():
-		show_next_prompt(enemy)
+	for e in combats.keys():
+		show_next_prompt(e)
 
 func end_combat(success: bool, enemy: Enemy):
 	if not combats.has(enemy):
@@ -59,7 +58,7 @@ func end_combat(success: bool, enemy: Enemy):
 		player.get_node("HealthComponent").take_damage_v2(10.0)
 
 	emit_signal("combat_ended", success, enemy)
-
+	
 	if player.has_node("PromptUI"):
 		player.get_node("PromptUI").hide_prompt()
 
@@ -112,7 +111,6 @@ func show_next_prompt(enemy: Enemy):
 			enemy.can_get_hit = true
 			enemy.take_damage()
 		print("¡Secuencia completada!")
-		end_combat(true, enemy)
 		return
 
 	data["input_received"] = false
@@ -122,14 +120,12 @@ func show_next_prompt(enemy: Enemy):
 
 	player.get_node("PromptUI").show_prompt(str(key))
 
-	# El ataque no depende del raycast ahora, sino del enemigo en combate
 	await enemy.attack()
 
-func _on_player_damage_attempted(from_position: Vector2, damage: float) -> void:
-	if not in_combat or not ray_cast_2d.is_colliding():
+func _on_player_damage_attempted(from_position: Vector2, damage: float,enemy: Enemy) -> void:
+	if not in_combat:
 		return
 
-	var enemy = ray_cast_2d.get_collider()
 	if enemy in combats:
 		var data = combats[enemy]
 

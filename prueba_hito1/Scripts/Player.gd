@@ -189,8 +189,8 @@ func take_damage(from_position: Vector2):
 	is_hurt = true
 	state = State.HURT
 	playback.travel("Hurt")
-	var knockback_dir = (global_position - from_position).normalized()
-	velocity = knockback_dir * knockback_strength
+	var knockback_dir = Vector2(sign(global_position.x - from_position.x), -0.5)
+	velocity = knockback_dir.normalized() * knockback_strength
 	await get_tree().create_timer(hurt_duration).timeout
 	velocity = Vector2.ZERO
 	is_hurt = false
@@ -205,6 +205,7 @@ func recibir_damage(_damage: float) -> void:
 	if is_blocking or is_hurt or dead:
 		return
 	if health_component.health <= 0:
+		combat_manager.end_combat(true, self)
 		death()
 
 func death() -> void:
@@ -216,7 +217,7 @@ func death() -> void:
 	set_physics_process(false)
 	set_collision_layer(0)
 	set_collision_mask(0)
-	playback.travel("Muerte")
+	playback.travel("Hurt")
 	await animation_tree.animation_finished
 	animation_tree.active = false
 	var tween = create_tween()
