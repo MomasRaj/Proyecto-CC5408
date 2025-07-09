@@ -24,7 +24,7 @@ var state = State.IDLE
 # Variables de movimiento y combate
 @export var WALK_SPEED = 40
 var GRAVITY = 900.0
-var knockback_strength = 100
+var knockback_strength = 150
 @export var min_distance_to_player = 50
 var dead: bool = false
 var can_attack := true
@@ -56,8 +56,7 @@ func _physics_process(delta):
 
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
-	else:
-		velocity.y = 0
+
 
 	match state:
 		State.IDLE:
@@ -111,8 +110,10 @@ func handle_moving():
 		velocity.x = sign(to_player.x) * WALK_SPEED
 
 func handle_knockback():
-	if knockback:
-		move_and_slide()
+	if is_on_floor():
+		knockback = false
+		state = State.IDLE
+		
 
 func _update_animation():
 	var new_animation = ""
@@ -155,27 +156,26 @@ func take_damage():
 	if can_get_hit and not dead:
 		state = State.HURT
 		playback.travel("Enemy_hurt")
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.1).timeout
 		if not dead:
 			parry_notify.disabled=true
 			parry_notify.disabled=false
 			state = State.IDLE
 
 func recibir_damage(damage: float) -> void:
-	if can_get_hit:
-		can_get_hit = false
-		knockback = true
+	if can_get_hit and not dead:
 		health_component.take_damage_v2(damage)
-		var knockback_dir = (global_position - player.position).normalized()
-		velocity = knockback_dir * knockback_strength
+		var knockback_dir = (global_position - player.global_position).normalized()
+		velocity.x = knockback_dir.x * knockback_strength
+		velocity.y = -2 * knockback_strength
+		state = State.KNOCKBACK
+		await get_tree().create_timer(0.4).timeout
+		velocity.y = 0
+		state = State.HURT
+		playback.travel("Enemy_hurt")
+
 		if health_component.health <= 0:
 			death()
-		else:
-			state = State.HURT
-			playback.travel("Enemy_hurt")
-			await animation_tree.animation_finished
-			knockback = false
-			state = State.IDLE
 	else:
 		state = State.IDLE
 		print("CANT GET HIT")

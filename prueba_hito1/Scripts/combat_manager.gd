@@ -7,7 +7,7 @@ extends Node
 @onready var player: Player = $"../Player"
 @onready var block_area: Area2D = $"../Player/Pivote/Sprite2D/BlockArea"
 @onready var ray_cast_2d: RayCast2D = $"../Player/Pivote/RayCast2D"
-
+@export var damage_window_duration := 5
 # Estado de combate
 var in_combat := false
 var combats := {}  # enemy → data
@@ -108,8 +108,7 @@ func show_next_prompt(enemy: Enemy):
 
 	if index >= sequence.size():
 		if ray_cast_2d.is_colliding() and ray_cast_2d.get_collider() == enemy:
-			enemy.can_get_hit = true
-			enemy.take_damage()
+			await start_damage_window(enemy)
 		print("¡Secuencia completada!")
 		return
 
@@ -152,3 +151,10 @@ func _on_parry_area_out():
 		if enemy in combats:
 			combats[enemy]["parry_conect"] = false
 			active_parry_targets.erase(enemy)
+
+func start_damage_window(enemy: Enemy) -> void:
+	enemy.can_get_hit = true
+	await get_tree().create_timer(damage_window_duration).timeout
+	if enemy and not enemy.dead:
+		enemy.can_get_hit = false
+		print("Fin de la ventana de daño para ", enemy.name)

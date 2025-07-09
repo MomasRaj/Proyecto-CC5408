@@ -25,7 +25,10 @@ func _on_area_entered(area: Area2D) -> void:
 			var enemy := hitbox.owner as Enemy
 			if enemy == null:
 				return  # Si el owner no es Enemy, no seguimos
-			damage_attempted.emit(hitbox.global_position, hitbox.damage, enemy)
+			if enemy.can_get_hit:
+				enemy.recibir_damage(hitbox.damage)
+			else:
+				damage_attempted.emit(hitbox.global_position, hitbox.damage, enemy)
 		hitbox.damage_dealt.emit()
 
 	elif owner.has_method("recibir_damage"):
