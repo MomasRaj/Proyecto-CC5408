@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://d2wfx0d77nbjr"]
+[gd_scene load_steps=47 format=4 uid="uid://d2wfx0d77nbjr"]
 
 [ext_resource type="Script" uid="uid://bltk0e4r7pl31" path="res://Scripts/main.gd" id="1_ouiqs"]
 [ext_resource type="PackedScene" uid="uid://dul63mmxlpdc2" path="res://Escenas/Player.tscn" id="2_41byt"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://emq5chbmxgko" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/grass_2.png" id="17_0emy8"]
 [ext_resource type="Script" uid="uid://bv07xn5i7d0fu" path="res://Scripts/combat_manager.gd" id="17_t4drp"]
 [ext_resource type="Texture2D" uid="uid://c5nuo5sag0jnw" path="res://Assets/oak_woods_v1.0/oak_woods_v1.0/decorations/grass_3.png" id="18_t4drp"]
+[ext_resource type="PackedScene" uid="uid://s01vvcfprkfa" path="res://ui/Moves.tscn" id="20_ngwie"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2e8qy"]
 texture = ExtResource("5_qrkw2")
@@ -3394,6 +3395,10 @@ tile_map_data = PackedByteArray("AAAQAAcAEAAAAAAAAAAkAAcAEAAAAAAAAAD8/wcAEAAAAAA
 tile_set = SubResource("TileSet_mh7bm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Moves" parent="CanvasLayer" instance=ExtResource("20_ngwie")]
+process_mode = 3
+visible = false
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("12_phw27")]
 process_mode = 3

@@ -2,6 +2,7 @@ extends Control
 
 @onready var control: Control = $"."
 @onready var volver: Button = $PanelContainer/MarginContainer/VBoxContainer/Volver
+@onready var moves: Label = $PanelContainer/MarginContainer/VBoxContainer/Moves
 
 
 

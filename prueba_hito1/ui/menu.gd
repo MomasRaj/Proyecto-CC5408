@@ -13,6 +13,7 @@ func _ready() -> void:
 	main_menu.pressed.connect(_on_main_menu_pressed)
 	resume.pressed.connect(_on_resume_pressed)
 	sound.pressed.connect(_on_sound_pressed) 
+	moves.pressed.connect(_on_volume_pressed)
 	hide()
 
 func _input(event: InputEvent) -> void:
@@ -23,6 +24,11 @@ func _input(event: InputEvent) -> void:
 func _on_sound_pressed() -> void:
 	var menu_volumen = get_parent().get_node("Control")
 	menu_volumen.show()
+	hide()
+
+func _on_volume_pressed() -> void:
+	var menu_movimientos = get_parent().get_node("Moves")
+	menu_movimientos.show()
 	hide()
 	
 func _on_resume_pressed() -> void:
