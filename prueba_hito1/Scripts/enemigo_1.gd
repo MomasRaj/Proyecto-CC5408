@@ -166,7 +166,7 @@ func recibir_damage(damage: float) -> void:
 	if can_get_hit and not dead:
 		health_component.take_damage_v2(damage)
 		var knockback_dir = (global_position - player.global_position).normalized()
-		velocity.x = knockback_dir.x * knockback_strength
+		velocity.x = knockback_dir.x * knockback_strength/2
 		velocity.y = -2 * knockback_strength
 		state = State.KNOCKBACK
 		await get_tree().create_timer(0.4).timeout

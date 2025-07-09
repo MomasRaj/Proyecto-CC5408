@@ -18,7 +18,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if hitbox == null:
 		return
 
-	if owner is Player:
+	if owner is Player or owner is Area2D:
 		# Esperar antes de emitir el intento de daño para permitir parry
 		await get_tree().create_timer(0.3).timeout
 		if combat_manager and combat_manager.in_combat:

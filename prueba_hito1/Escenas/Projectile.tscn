@@ -7,13 +7,7 @@
 size = Vector2(70.1311, 87.8787)
 
 [sub_resource type="GDScript" id="GDScript_crbyo"]
-script/source = "extends Area2D
-
-signal damage_dealt
-@export var damage = 20
-
-func _ready():
-	add_to_group(\"hitboxes\")
+script/source = "extends Hitbox
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gltra"]
