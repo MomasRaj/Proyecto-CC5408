@@ -30,6 +30,12 @@ window/size/window_height_override=720
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[importer_defaults]
+
+animation_library={
+&"animation/fps": 60.0
+}
+
 [input]
 
 entry_jump={

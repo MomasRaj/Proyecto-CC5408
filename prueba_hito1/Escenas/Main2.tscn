@@ -3348,7 +3348,7 @@ volume_db = -8.0
 [node name="Enemigo2" parent="." instance=ExtResource("4_r3ixq")]
 z_index = 1
 position = Vector2(803, 212)
-WALK_SPEED = 120
+WALK_SPEED = 500
 
 [node name="MapLayers" type="Node" parent="."]
 
