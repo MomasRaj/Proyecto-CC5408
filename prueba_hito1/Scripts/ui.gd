@@ -11,4 +11,4 @@ func show_message(text: String,win:bool):
 
 	await get_tree().create_timer(2.0).timeout
 	# Opcional: recargar escena o ir a menú
-	get_tree().change_scene_to_file("res://ui/Titulo.tscn")
+	get_tree().change_scene_to_file("res://ui/credits.tscn")
