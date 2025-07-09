@@ -675,6 +675,7 @@ bg_color = Color(0.992157, 0, 0, 1)
 texture_filter = 1
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_nffar")
+WALK_SPEED = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -39)
@@ -723,6 +724,8 @@ shape = SubResource("CapsuleShape2D_cc7xr")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("11_4nkaj")
+health = 200.0
+max_health = 200.0
 metadata/_custom_type_script = "uid://v4e05x5c7afs"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

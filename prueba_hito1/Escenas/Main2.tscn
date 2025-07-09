@@ -2293,6 +2293,7 @@ offset = Vector2(0, -30)
 [node name="Enemigo2" parent="." instance=ExtResource("4_r3ixq")]
 z_index = 1
 position = Vector2(941, 142)
+WALK_SPEED = 120
 
 [node name="MapLayers" type="Node" parent="."]
 

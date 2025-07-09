@@ -21,7 +21,7 @@ var state = State.IDLE
 
 
 # Variables de movimiento y combate
-var WALK_SPEED = 20
+@export var WALK_SPEED = 20
 var GRAVITY = 900.0
 var knockback_strength = 100
 var min_distance_to_player = 50
